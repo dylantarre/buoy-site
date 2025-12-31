@@ -26,13 +26,13 @@ import { siteConfig } from '../config'
       <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold mb-8 leading-tight animate-fade-in-up" style="animation-delay: 0.1s;">
         <span class="text-light">One command.</span>
         <br />
-        <span class="text-gradient-sunrise">Total clarity.</span>
+        <span class="text-gradient-sunrise">See every component.</span>
       </h1>
 
       <p class="text-xl sm:text-2xl text-slate max-w-3xl mx-auto mb-12 leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s;">
-        You don't need to read code to understand it.
+        Don't have a formal design system? Doesn't matter.
         <br class="hidden sm:block" />
-        <span class="text-light">Run one command. See everything.</span>
+        <span class="text-light">See what's actually in your codebase.</span>
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.3s;">
@@ -58,10 +58,10 @@ import { siteConfig } from '../config'
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 scroll-reveal">
         <h2 class="text-3xl sm:text-5xl font-bold text-light mb-6">
-          This is what you see.
+          Your component inventory.
         </h2>
         <p class="text-xl text-slate max-w-2xl mx-auto">
-          No code. No jargon. Just a clear picture of your design system's health.
+          Every component in your codebase, listed and categorized. Finally, clarity.
         </p>
       </div>
 
@@ -92,76 +92,144 @@ import { siteConfig } from '../config'
                 ))}
               </div>
 
-              <div class="space-y-1 text-sm">
+              <div class="space-y-1 text-sm mb-6">
                 <div><span class="text-success">46/46 components</span> <span class="text-slate">·</span> <span class="text-success font-semibold">100% aligned</span></div>
-                <div class="mt-3 space-y-0.5">
-                  <div><span class="text-success">⛁</span> <span class="text-slate">Aligned:</span> <span class="text-success">46 (100%)</span></div>
-                  <div><span class="text-warning">⛀</span> <span class="text-slate">Drifting:</span> <span class="text-slate-dark">0 (0%)</span></div>
-                  <div><span class="text-slate-dark">⛶</span> <span class="text-slate">Untracked:</span> <span class="text-slate-dark">0 (0%)</span></div>
-                </div>
               </div>
             </div>
 
-            <div class="text-success mt-6">✓ Perfect alignment! No drift detected.</div>
+            <!-- Component list -->
+            <div class="text-light font-semibold mb-3">Aligned:</div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-1 text-sm text-slate component-list">
+              <div>NavigationPartial</div>
+              <div>LayoutCshtml</div>
+              <div>FooterCshtml</div>
+              <div>SidebarCshtml</div>
+              <div>BannerCshtml</div>
+              <div>PaginationPartial</div>
+              <div>ShareButtonsCshtml</div>
+              <div>SocialsPartial</div>
+              <div>LoginPartialCshtml</div>
+              <div>MessagesPartial</div>
+              <div>TagsPartialCshtml</div>
+              <div>LabelsPartialCshtml</div>
+              <div>PhotoViewerPartial</div>
+              <div>RecaptchaCshtml</div>
+              <div>TurnstileCshtml</div>
+              <div class="text-slate-dark">... and 31 more</div>
+            </div>
+
+            <div class="text-success mt-6">✓ 46 components discovered.</div>
           </div>
         </div>
       </div>
 
-      <!-- What it tells you -->
-      <div class="mt-16 grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-        <div class="scroll-reveal text-center" style="--delay: 0.2s;">
-          <div class="text-4xl mb-3">⛁</div>
-          <div class="text-light font-semibold mb-1">Aligned</div>
-          <div class="text-sm text-slate">Components following your design system</div>
-        </div>
-        <div class="scroll-reveal text-center" style="--delay: 0.25s;">
-          <div class="text-4xl mb-3">⛀</div>
-          <div class="text-warning font-semibold mb-1">Drifting</div>
-          <div class="text-sm text-slate">Components with hardcoded values</div>
-        </div>
-        <div class="scroll-reveal text-center" style="--delay: 0.3s;">
-          <div class="text-4xl mb-3">⛶</div>
-          <div class="text-slate-dark font-semibold mb-1">Untracked</div>
-          <div class="text-sm text-slate">New components not yet mapped</div>
+      <!-- The insight -->
+      <div class="mt-16 max-w-3xl mx-auto text-center scroll-reveal" style="--delay: 0.2s;">
+        <div class="bg-navy-dark/50 border border-buoy/20 rounded-xl p-8">
+          <div class="text-2xl mb-4">🤯</div>
+          <p class="text-lg text-light mb-2">
+            "I never knew all these components existed in our code."
+          </p>
+          <p class="text-slate">
+            That's the moment. You finally see what's there — the building blocks you can affect,
+            improve, document, and design for. No more guessing. No more "I think we have a sidebar somewhere."
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Section 3: Before Buoy -->
+  <!-- Section: What You Can Do With This -->
+  <section class="py-32 bg-navy relative">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-3xl sm:text-5xl font-bold text-light mb-6">
+          Now you know what's there.
+        </h2>
+        <p class="text-xl text-slate max-w-2xl mx-auto">
+          Use this list to build a real design system — or just understand what you're working with.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        <div class="scroll-reveal" style="--delay: 0.1s;">
+          <div class="bg-navy-dark border border-navy-light/20 rounded-xl p-6 h-full text-center hover:border-buoy/30 transition-colors">
+            <div class="text-4xl mb-4">🎨</div>
+            <div class="text-light font-semibold mb-2">Match to Figma</div>
+            <div class="text-sm text-slate">Create Figma components for each one. Build your design library from code truth.</div>
+          </div>
+        </div>
+
+        <div class="scroll-reveal" style="--delay: 0.15s;">
+          <div class="bg-navy-dark border border-navy-light/20 rounded-xl p-6 h-full text-center hover:border-buoy/30 transition-colors">
+            <div class="text-4xl mb-4">📖</div>
+            <div class="text-light font-semibold mb-2">Add to Storybook</div>
+            <div class="text-sm text-slate">Know exactly which components need stories. Prioritize what matters.</div>
+          </div>
+        </div>
+
+        <div class="scroll-reveal" style="--delay: 0.2s;">
+          <div class="bg-navy-dark border border-navy-light/20 rounded-xl p-6 h-full text-center hover:border-buoy/30 transition-colors">
+            <div class="text-4xl mb-4">🖼️</div>
+            <div class="text-light font-semibold mb-2">Sync with Framer</div>
+            <div class="text-sm text-slate">Build prototypes with the real components your codebase actually has.</div>
+          </div>
+        </div>
+
+        <div class="scroll-reveal" style="--delay: 0.25s;">
+          <div class="bg-navy-dark border border-navy-light/20 rounded-xl p-6 h-full text-center hover:border-buoy/30 transition-colors">
+            <div class="text-4xl mb-4">📝</div>
+            <div class="text-light font-semibold mb-2">Document</div>
+            <div class="text-sm text-slate">Create a component inventory. Share it with your team. Everyone knows what exists.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 text-center scroll-reveal" style="--delay: 0.3s;">
+        <p class="text-slate text-lg">
+          You can't design for components you don't know exist. <span class="text-light">Now you know.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: The Problem -->
   <section class="py-32 bg-navy-dark relative">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 scroll-reveal">
         <h2 class="text-3xl sm:text-5xl font-bold text-light mb-6">
-          Before, you had to ask.
+          The codebase is a black box.
         </h2>
+        <p class="text-xl text-slate max-w-2xl mx-auto">
+          For designers, code has always been invisible. You know your Figma file. You don't know the codebase.
+        </p>
       </div>
 
       <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         <!-- Before -->
         <div class="scroll-reveal" style="--delay: 0.1s;">
           <div class="bg-navy border border-navy-light/30 rounded-xl p-6 h-full">
-            <div class="text-critical text-sm font-semibold uppercase tracking-wide mb-6">Before Buoy</div>
+            <div class="text-critical text-sm font-semibold uppercase tracking-wide mb-6">The Old Way</div>
             <div class="space-y-4 text-sm">
               <div class="flex items-start gap-3">
-                <span class="text-critical mt-1">💬</span>
-                <div class="bg-navy-dark rounded-lg p-3 flex-1">
-                  <span class="text-slate">"Hey, are we using our design tokens everywhere?"</span>
-                </div>
+                <span class="text-critical mt-1">❓</span>
+                <div class="text-slate">"What components do we actually have?"</div>
               </div>
               <div class="flex items-start gap-3">
-                <span class="text-slate-dark mt-1">⏳</span>
-                <div class="text-slate-dark italic">...waits 2 days for response...</div>
+                <span class="text-critical mt-1">❓</span>
+                <div class="text-slate">"Is there already a sidebar component?"</div>
               </div>
               <div class="flex items-start gap-3">
-                <span class="text-critical mt-1">💬</span>
-                <div class="bg-navy-dark rounded-lg p-3 flex-1">
-                  <span class="text-slate">"I think so? Maybe check with the frontend team?"</span>
-                </div>
+                <span class="text-critical mt-1">❓</span>
+                <div class="text-slate">"Where's the navigation partial?"</div>
               </div>
               <div class="flex items-start gap-3">
-                <span class="text-critical mt-1">😤</span>
-                <div class="text-slate-dark italic">No clear answer. Ever.</div>
+                <span class="text-critical mt-1">❓</span>
+                <div class="text-slate">"What can I actually affect as a designer?"</div>
+              </div>
+              <div class="flex items-start gap-3 mt-4">
+                <span class="text-slate-dark mt-1">🤷</span>
+                <div class="text-slate-dark italic">Ask a developer. Wait. Maybe get an answer.</div>
               </div>
             </div>
           </div>
@@ -183,14 +251,12 @@ import { siteConfig } from '../config'
                 <div class="text-slate-dark italic">...2 seconds later...</div>
               </div>
               <div class="flex items-start gap-3">
-                <span class="text-success mt-1">✓</span>
-                <div class="bg-navy-dark rounded-lg p-3 flex-1">
-                  <span class="text-success">46/46 components · 100% aligned</span>
-                </div>
+                <span class="text-success mt-1">📦</span>
+                <div class="text-slate">NavigationPartial, LayoutCshtml, FooterCshtml, SidebarCshtml, BannerCshtml...</div>
               </div>
               <div class="flex items-start gap-3">
-                <span class="text-success mt-1">😌</span>
-                <div class="text-light italic">You know. Instantly.</div>
+                <span class="text-success mt-1">✓</span>
+                <div class="text-light italic">Every component. Listed. Named. Visible.</div>
               </div>
             </div>
           </div>
@@ -199,64 +265,64 @@ import { siteConfig } from '../config'
     </div>
   </section>
 
-  <!-- Section 4: What You Can Ask -->
+  <!-- Section 4: No Formal System? No Problem -->
   <section class="py-32 bg-navy relative">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 scroll-reveal">
         <h2 class="text-3xl sm:text-5xl font-bold text-light mb-6">
-          Questions you can answer yourself.
+          No formal design system? Perfect.
         </h2>
         <p class="text-xl text-slate max-w-2xl mx-auto">
-          No Slack messages. No meetings. No waiting.
+          You don't need tokens or Storybook to use Buoy. It finds what's already there.
         </p>
       </div>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
         <div class="scroll-reveal" style="--delay: 0.1s;">
           <div class="bg-navy-dark border border-navy-light/20 rounded-xl p-6 h-full hover:border-buoy/30 transition-colors">
-            <div class="text-2xl mb-3">📊</div>
-            <div class="text-light font-semibold mb-2">"What's our design system coverage?"</div>
-            <div class="text-sm text-slate">See the percentage instantly. Track it over time.</div>
+            <div class="text-2xl mb-3">📦</div>
+            <div class="text-light font-semibold mb-2">"What components exist?"</div>
+            <div class="text-sm text-slate">Get a complete inventory of every reusable piece in your codebase.</div>
           </div>
         </div>
 
         <div class="scroll-reveal" style="--delay: 0.15s;">
           <div class="bg-navy-dark border border-navy-light/20 rounded-xl p-6 h-full hover:border-buoy/30 transition-colors">
             <div class="text-2xl mb-3">🔍</div>
-            <div class="text-light font-semibold mb-2">"Which components are drifting?"</div>
-            <div class="text-sm text-slate">Get the exact list. Every file, every line.</div>
+            <div class="text-light font-semibold mb-2">"Where's that sidebar thing?"</div>
+            <div class="text-sm text-slate">Find components by name. See exactly where they live.</div>
           </div>
         </div>
 
         <div class="scroll-reveal" style="--delay: 0.2s;">
           <div class="bg-navy-dark border border-navy-light/20 rounded-xl p-6 h-full hover:border-buoy/30 transition-colors">
-            <div class="text-2xl mb-3">📦</div>
-            <div class="text-light font-semibold mb-2">"How many components do we have?"</div>
-            <div class="text-sm text-slate">Count them all. See how they're categorized.</div>
+            <div class="text-2xl mb-3">🏗️</div>
+            <div class="text-light font-semibold mb-2">"What are the building blocks?"</div>
+            <div class="text-sm text-slate">See layouts, partials, views — the architecture of your UI.</div>
           </div>
         </div>
 
         <div class="scroll-reveal" style="--delay: 0.25s;">
           <div class="bg-navy-dark border border-navy-light/20 rounded-xl p-6 h-full hover:border-buoy/30 transition-colors">
-            <div class="text-2xl mb-3">🎨</div>
-            <div class="text-light font-semibold mb-2">"Are our tokens being used?"</div>
-            <div class="text-sm text-slate">Find hardcoded colors. Find hardcoded spacing.</div>
+            <div class="text-2xl mb-3">🎯</div>
+            <div class="text-light font-semibold mb-2">"What can I design for?"</div>
+            <div class="text-sm text-slate">Know which components exist so you can create matching designs.</div>
           </div>
         </div>
 
         <div class="scroll-reveal" style="--delay: 0.3s;">
           <div class="bg-navy-dark border border-navy-light/20 rounded-xl p-6 h-full hover:border-buoy/30 transition-colors">
-            <div class="text-2xl mb-3">📈</div>
-            <div class="text-light font-semibold mb-2">"Is the codebase getting better?"</div>
-            <div class="text-sm text-slate">Compare runs. See the trend. Prove improvement.</div>
+            <div class="text-2xl mb-3">📋</div>
+            <div class="text-light font-semibold mb-2">"What needs documenting?"</div>
+            <div class="text-sm text-slate">Use the list to prioritize which components to add to Storybook.</div>
           </div>
         </div>
 
         <div class="scroll-reveal" style="--delay: 0.35s;">
           <div class="bg-navy-dark border border-navy-light/20 rounded-xl p-6 h-full hover:border-buoy/30 transition-colors">
-            <div class="text-2xl mb-3">🏷️</div>
-            <div class="text-light font-semibold mb-2">"What's not following conventions?"</div>
-            <div class="text-sm text-slate">Naming drift. Prop mismatches. Pattern violations.</div>
+            <div class="text-2xl mb-3">🚀</div>
+            <div class="text-light font-semibold mb-2">"Where do I start?"</div>
+            <div class="text-sm text-slate">This list IS your starting point. Build your design system from here.</div>
           </div>
         </div>
       </div>
