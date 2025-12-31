@@ -1,57 +1,58 @@
 ---
-// Smooth wave background with layered depth
+// Animated digital wave background with nautical aesthetic
 ---
 
 <div class="wave-background">
-  <!-- Wave Layers - stacked with depth -->
-  <div class="waves-container">
-    <!-- Back wave - deepest layer -->
-    <div class="wave wave-back">
-      <svg viewBox="0 0 1440 320" preserveAspectRatio="none" class="wave-svg">
-        <path
-          class="wave-path"
-          d="M0,160
-             C120,200 240,120 360,160
-             C480,200 600,120 720,160
-             C840,200 960,120 1080,160
-             C1200,200 1320,120 1440,160
-             L1440,320 L0,320 Z"
-        />
-      </svg>
-    </div>
+  <!-- SVG Wave Layers -->
+  <svg class="wave-svg" viewBox="0 0 1440 800" preserveAspectRatio="none">
+    <defs>
+      <!-- Gradient for waves -->
+      <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="rgba(0, 102, 255, 0.15)" />
+        <stop offset="50%" stop-color="rgba(139, 92, 246, 0.1)" />
+        <stop offset="100%" stop-color="rgba(0, 102, 255, 0.15)" />
+      </linearGradient>
+      <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="rgba(139, 92, 246, 0.1)" />
+        <stop offset="50%" stop-color="rgba(0, 102, 255, 0.15)" />
+        <stop offset="100%" stop-color="rgba(139, 92, 246, 0.1)" />
+      </linearGradient>
+      <linearGradient id="waveGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="rgba(249, 115, 22, 0.08)" />
+        <stop offset="50%" stop-color="rgba(0, 102, 255, 0.12)" />
+        <stop offset="100%" stop-color="rgba(249, 115, 22, 0.08)" />
+      </linearGradient>
+    </defs>
 
-    <!-- Middle wave -->
-    <div class="wave wave-middle">
-      <svg viewBox="0 0 1440 320" preserveAspectRatio="none" class="wave-svg">
-        <path
-          class="wave-path"
-          d="M0,192
-             C144,240 288,144 432,192
-             C576,240 720,144 864,192
-             C1008,240 1152,144 1296,192
-             C1368,216 1404,180 1440,192
-             L1440,320 L0,320 Z"
-        />
-      </svg>
-    </div>
+    <!-- Deep background waves -->
+    <path class="wave wave-1" fill="url(#waveGradient1)" d="M0,400 C150,350 350,450 500,400 C650,350 850,450 1000,400 C1150,350 1350,450 1440,400 L1440,800 L0,800 Z"/>
+    <path class="wave wave-2" fill="url(#waveGradient2)" d="M0,450 C200,400 400,500 600,450 C800,400 1000,500 1200,450 C1350,410 1400,470 1440,450 L1440,800 L0,800 Z"/>
+    <path class="wave wave-3" fill="url(#waveGradient3)" d="M0,500 C180,460 380,540 580,500 C780,460 980,540 1180,500 C1330,470 1400,520 1440,500 L1440,800 L0,800 Z"/>
 
-    <!-- Front wave - closest layer -->
-    <div class="wave wave-front">
-      <svg viewBox="0 0 1440 320" preserveAspectRatio="none" class="wave-svg">
-        <path
-          class="wave-path"
-          d="M0,224
-             C180,280 360,168 540,224
-             C720,280 900,168 1080,224
-             C1260,280 1350,200 1440,224
-             L1440,320 L0,320 Z"
-        />
-      </svg>
-    </div>
+    <!-- Digital grid lines -->
+    <g class="grid-lines" opacity="0.15">
+      <line x1="0" y1="200" x2="1440" y2="200" stroke="url(#waveGradient1)" stroke-width="1"/>
+      <line x1="0" y1="300" x2="1440" y2="300" stroke="url(#waveGradient1)" stroke-width="1"/>
+      <line x1="0" y1="400" x2="1440" y2="400" stroke="url(#waveGradient1)" stroke-width="1"/>
+      <line x1="0" y1="500" x2="1440" y2="500" stroke="url(#waveGradient1)" stroke-width="1"/>
+      <line x1="0" y1="600" x2="1440" y2="600" stroke="url(#waveGradient1)" stroke-width="1"/>
+    </g>
+  </svg>
+
+  <!-- Floating particles -->
+  <div class="particles">
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+    <div class="particle p5"></div>
+    <div class="particle p6"></div>
+    <div class="particle p7"></div>
+    <div class="particle p8"></div>
   </div>
 
-  <!-- Subtle grain overlay -->
-  <div class="grain-overlay"></div>
+  <!-- Mesh gradient overlay -->
+  <div class="mesh-overlay"></div>
 </div>
 
 <style>
@@ -63,94 +64,162 @@
     background: linear-gradient(
       180deg,
       #0a1628 0%,
-      #0d1f35 50%,
-      #0a1628 100%
+      #0d1f35 30%,
+      #0a1628 70%,
+      #061018 100%
     );
-  }
-
-  .waves-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    min-height: 200px;
-  }
-
-  .wave {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 200%;
-    height: 100%;
   }
 
   .wave-svg {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 50%;
+    width: 100%;
     height: 100%;
   }
 
-  /* Back wave - blue tones */
-  .wave-back {
-    z-index: 1;
-    opacity: 0.7;
-    animation: waveFlow 25s linear infinite;
+  /* Animated waves */
+  .wave {
+    animation: waveMove 12s ease-in-out infinite;
+    transform-origin: center bottom;
   }
 
-  .wave-back .wave-path {
-    fill: rgba(30, 58, 95, 0.8);
+  .wave-1 {
+    animation-delay: 0s;
+    animation-duration: 15s;
   }
 
-  /* Middle wave - purple tones */
-  .wave-middle {
-    z-index: 2;
-    opacity: 0.8;
-    animation: waveFlow 20s linear infinite;
-    animation-delay: -5s;
+  .wave-2 {
+    animation-delay: -3s;
+    animation-duration: 12s;
   }
 
-  .wave-middle .wave-path {
-    fill: rgba(45, 55, 85, 0.85);
+  .wave-3 {
+    animation-delay: -6s;
+    animation-duration: 10s;
   }
 
-  /* Front wave - darkest, most visible */
-  .wave-front {
-    z-index: 3;
-    opacity: 0.9;
-    animation: waveFlow 15s linear infinite;
-    animation-delay: -10s;
-  }
-
-  .wave-front .wave-path {
-    fill: rgba(20, 40, 70, 0.9);
-  }
-
-  /* Smooth horizontal wave motion */
-  @keyframes waveFlow {
-    0% {
-      transform: translateX(0);
+  @keyframes waveMove {
+    0%, 100% {
+      d: path("M0,400 C150,350 350,450 500,400 C650,350 850,450 1000,400 C1150,350 1350,450 1440,400 L1440,800 L0,800 Z");
     }
-    100% {
-      transform: translateX(-50%);
+    50% {
+      d: path("M0,420 C150,470 350,370 500,420 C650,470 850,370 1000,420 C1150,470 1350,370 1440,420 L1440,800 L0,800 Z");
     }
   }
 
-  /* Subtle grain texture */
-  .grain-overlay {
+  .wave-2 {
+    animation-name: waveMove2;
+  }
+
+  @keyframes waveMove2 {
+    0%, 100% {
+      d: path("M0,450 C200,400 400,500 600,450 C800,400 1000,500 1200,450 C1350,410 1400,470 1440,450 L1440,800 L0,800 Z");
+    }
+    50% {
+      d: path("M0,470 C200,520 400,420 600,470 C800,520 1000,420 1200,470 C1350,510 1400,430 1440,470 L1440,800 L0,800 Z");
+    }
+  }
+
+  .wave-3 {
+    animation-name: waveMove3;
+  }
+
+  @keyframes waveMove3 {
+    0%, 100% {
+      d: path("M0,500 C180,460 380,540 580,500 C780,460 980,540 1180,500 C1330,470 1400,520 1440,500 L1440,800 L0,800 Z");
+    }
+    50% {
+      d: path("M0,520 C180,560 380,480 580,520 C780,560 980,480 1180,520 C1330,550 1400,490 1440,520 L1440,800 L0,800 Z");
+    }
+  }
+
+  /* Grid animation */
+  .grid-lines line {
+    animation: gridPulse 4s ease-in-out infinite;
+  }
+
+  .grid-lines line:nth-child(2) { animation-delay: 0.5s; }
+  .grid-lines line:nth-child(3) { animation-delay: 1s; }
+  .grid-lines line:nth-child(4) { animation-delay: 1.5s; }
+  .grid-lines line:nth-child(5) { animation-delay: 2s; }
+
+  @keyframes gridPulse {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.25; }
+  }
+
+  /* Floating particles */
+  .particles {
     position: absolute;
     inset: 0;
-    pointer-events: none;
-    opacity: 0.04;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+    overflow: hidden;
   }
 
-  /* Responsive */
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(0, 102, 255, 0.6);
+    border-radius: 50%;
+    animation: float 20s linear infinite;
+  }
+
+  .p1 { left: 10%; top: 20%; animation-delay: 0s; animation-duration: 25s; }
+  .p2 { left: 20%; top: 60%; animation-delay: -5s; animation-duration: 20s; background: rgba(139, 92, 246, 0.5); }
+  .p3 { left: 35%; top: 30%; animation-delay: -10s; animation-duration: 22s; }
+  .p4 { left: 50%; top: 70%; animation-delay: -3s; animation-duration: 18s; background: rgba(249, 115, 22, 0.4); }
+  .p5 { left: 65%; top: 25%; animation-delay: -8s; animation-duration: 24s; background: rgba(139, 92, 246, 0.5); }
+  .p6 { left: 75%; top: 55%; animation-delay: -12s; animation-duration: 21s; }
+  .p7 { left: 85%; top: 35%; animation-delay: -2s; animation-duration: 19s; background: rgba(249, 115, 22, 0.4); }
+  .p8 { left: 95%; top: 75%; animation-delay: -7s; animation-duration: 23s; }
+
+  @keyframes float {
+    0% {
+      transform: translateY(100vh) scale(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+      transform: translateY(80vh) scale(1);
+    }
+    90% {
+      opacity: 1;
+      transform: translateY(-10vh) scale(1);
+    }
+    100% {
+      transform: translateY(-20vh) scale(0);
+      opacity: 0;
+    }
+  }
+
+  /* Mesh gradient overlay */
+  .mesh-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(0, 102, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 40% 80%, rgba(249, 115, 22, 0.06) 0%, transparent 40%),
+      radial-gradient(ellipse at 90% 80%, rgba(0, 102, 255, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Noise texture overlay */
+  .wave-background::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  /* Responsive adjustments */
   @media (max-width: 768px) {
-    .waves-container {
-      height: 40%;
+    .particle {
+      width: 3px;
+      height: 3px;
     }
   }
 </style>
