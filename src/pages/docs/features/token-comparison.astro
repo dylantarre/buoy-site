@@ -1,0 +1,158 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="Token Comparison" description="Compare codebase values against design tokens">
+  <h1>Token Comparison</h1>
+
+  <p>
+    Buoy compares values in your codebase against your design tokens to find mismatches.
+    This helps ensure your implementation matches your design system source of truth.
+  </p>
+
+  <h2>How It Works</h2>
+
+  <ol>
+    <li><strong>Load tokens</strong> — From JSON, CSS, or Figma</li>
+    <li><strong>Scan code</strong> — Extract all style values from your codebase</li>
+    <li><strong>Match</strong> — Compare each value against your token set</li>
+    <li><strong>Report</strong> — Show matched, unmatched, and close matches</li>
+  </ol>
+
+  <h2>Supported Token Formats</h2>
+
+  <h3>W3C Design Tokens (JSON)</h3>
+
+  <pre><code set:text={`{
+  "color": {
+    "primary": {
+      "$value": "#3b82f6",
+      "$type": "color"
+    },
+    "secondary": {
+      "$value": "#64748b",
+      "$type": "color"
+    }
+  },
+  "spacing": {
+    "sm": { "$value": "8px" },
+    "md": { "$value": "16px" },
+    "lg": { "$value": "24px" }
+  }
+}`} /></pre>
+
+  <h3>Tokens Studio Format</h3>
+
+  <pre><code set:text={`{
+  "colors": {
+    "blue": {
+      "500": "#3b82f6",
+      "600": "#2563eb"
+    }
+  },
+  "spacing": {
+    "4": "16px",
+    "8": "32px"
+  }
+}`} /></pre>
+
+  <h3>CSS Custom Properties</h3>
+
+  <pre><code>:root {
+  --color-primary: #3b82f6;
+  --color-secondary: #64748b;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+}</code></pre>
+
+  <h3>SCSS Variables</h3>
+
+  <pre><code>$color-primary: #3b82f6;
+$color-secondary: #64748b;
+$spacing-sm: 8px;
+$spacing-md: 16px;</code></pre>
+
+  <h2>Comparison Output</h2>
+
+  <pre><code>$ buoy compare design-tokens.json
+
+Token Coverage Report
+─────────────────────
+
+Colors (18 tokens defined)
+  ✓ 15 matched
+  ✗ 3 unmatched:
+      #f9fafb  (3 usages)
+      #374151  (2 usages)
+      #3b83f6  (1 usage) → close to #3b82f6
+
+Spacing (8 tokens defined)
+  ✓ 6 matched
+  ✗ 2 unmatched:
+      15px  (4 usages) → close to 16px
+      13px  (1 usage)
+
+Coverage: 84%</code></pre>
+
+  <h2>Close Match Detection</h2>
+
+  <p>
+    Buoy identifies values that are "close" to your tokens, which are often typos:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Found</th>
+        <th>Token</th>
+        <th>Likely Issue</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>#3b83f6</code></td>
+        <td><code>#3b82f6</code></td>
+        <td>Typo (one digit off)</td>
+      </tr>
+      <tr>
+        <td><code>15px</code></td>
+        <td><code>16px</code></td>
+        <td>Off-by-one</td>
+      </tr>
+      <tr>
+        <td><code>rgb(59,130,246)</code></td>
+        <td><code>#3b82f6</code></td>
+        <td>Same color, different format</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Value Normalization</h2>
+
+  <p>Buoy normalizes values for accurate comparison:</p>
+
+  <ul>
+    <li><strong>Colors</strong>: <code>rgb()</code>, <code>hsl()</code>, hex are normalized</li>
+    <li><strong>Spacing</strong>: <code>px</code>, <code>rem</code>, <code>em</code> are compared</li>
+    <li><strong>Case</strong>: <code>#FFF</code> matches <code>#fff</code></li>
+  </ul>
+
+  <h2>Usage</h2>
+
+  <pre><code># Compare against local file
+buoy compare design-tokens.json
+
+# Compare against Figma
+buoy compare --figma
+
+# With strict mode (fail on any unmatched)
+buoy compare tokens.json --strict</code></pre>
+
+  <h2>Related</h2>
+
+  <ul>
+    <li><a href="/docs/cli/compare">buoy compare</a> — Command reference</li>
+    <li><a href="/docs/integrations/figma">Figma Integration</a> — Sync with Figma</li>
+    <li><a href="/docs/features/drift-detection">Drift Detection</a> — Understanding drift</li>
+  </ul>
+</DocsLayout>

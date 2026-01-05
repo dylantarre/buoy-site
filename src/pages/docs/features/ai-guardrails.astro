@@ -1,0 +1,306 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="AI Guardrails" description="A source of truth for AI-generated code">
+  <h1>AI Guardrails</h1>
+
+  <p>
+    Development has tests. Design systems need the same thing. Buoy provides the missing
+    feedback loop that keeps AI-generated code aligned with your design system.
+  </p>
+
+  <h2>The Problem with AI Code Generation</h2>
+
+  <p>
+    AI tools like Copilot, Claude, and ChatGPT are incredibly productive. They can scaffold
+    components in seconds. But they have a fundamental limitation: <strong>they don't know
+    your design system.</strong>
+  </p>
+
+  <p>When you ask AI to "create a card component," it generates something reasonable:</p>
+
+  <pre><code>// AI-generated code
+.card &#123;
+  padding: 15px;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+&#125;</code></pre>
+
+  <p>
+    This code works. It looks fine. But every value is wrong:
+  </p>
+
+  <ul>
+    <li><code>15px</code> padding → your system uses <code>16px</code></li>
+    <li><code>6px</code> radius → your system uses <code>8px</code></li>
+    <li><code>#f8f9fa</code> → your gray is <code>#f9fafb</code></li>
+    <li>Hardcoded shadow → you have a <code>shadow-sm</code> token</li>
+  </ul>
+
+  <p>
+    None of this triggers an error. The component renders. The PR gets approved.
+    Your design system just got a little more fragmented.
+  </p>
+
+  <h2>Development Has Solved This</h2>
+
+  <p>
+    In code, we have layers of automated feedback:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tool</th>
+        <th>What It Catches</th>
+        <th>When</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>TypeScript</strong></td>
+        <td>Type errors, missing properties</td>
+        <td>As you type</td>
+      </tr>
+      <tr>
+        <td><strong>ESLint</strong></td>
+        <td>Code style, bad patterns</td>
+        <td>On save / in CI</td>
+      </tr>
+      <tr>
+        <td><strong>Tests</strong></td>
+        <td>Broken functionality</td>
+        <td>On commit / in CI</td>
+      </tr>
+      <tr>
+        <td><strong>Build</strong></td>
+        <td>Import errors, syntax issues</td>
+        <td>On deploy</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    If AI generates code with a type error, TypeScript catches it immediately.
+    If it uses a deprecated API, ESLint flags it. If it breaks a feature, tests fail.
+  </p>
+
+  <p>
+    <strong>Design systems have none of this.</strong> Until now.
+  </p>
+
+  <h2>Buoy: The Missing Layer</h2>
+
+  <p>
+    Buoy adds design system validation to your feedback loop:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tool</th>
+        <th>What It Catches</th>
+        <th>When</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>TypeScript</strong></td>
+        <td>Type errors</td>
+        <td>As you type</td>
+      </tr>
+      <tr>
+        <td><strong>ESLint</strong></td>
+        <td>Code patterns</td>
+        <td>On save</td>
+      </tr>
+      <tr>
+        <td><strong>Buoy</strong></td>
+        <td>Design drift</td>
+        <td>On commit / in CI</td>
+      </tr>
+      <tr>
+        <td><strong>Tests</strong></td>
+        <td>Functionality</td>
+        <td>On commit</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Now when AI generates <code>padding: 15px</code>, Buoy catches it:
+  </p>
+
+  <pre><code>$ buoy ci
+
+Design System Check Failed
+
+~ Hardcoded Value
+  File: src/components/Card.tsx:3
+  Found: padding: 15px
+  Expected: 16px (--spacing-4)
+
+Exit code: 1</code></pre>
+
+  <h2>Source of Truth for AI</h2>
+
+  <p>
+    The key insight: <strong>AI needs boundaries, not just examples.</strong>
+  </p>
+
+  <p>
+    Giving AI your component library helps, but it's not enough. AI will still
+    improvise values when it doesn't find an exact match. It will still generate
+    "close enough" colors and spacing.
+  </p>
+
+  <p>
+    Buoy provides the boundary. It's the automated check that says "this value
+    doesn't exist in the design system" before code ships.
+  </p>
+
+  <h2>How Teams Use This</h2>
+
+  <h3>1. Set a Health Threshold</h3>
+
+  <pre><code>buoy ci --threshold 70</code></pre>
+
+  <p>
+    PRs must maintain at least 70% design system health to merge.
+  </p>
+
+  <h3>2. Block on New Drift</h3>
+
+  <pre><code>buoy ci --strict</code></pre>
+
+  <p>
+    Zero tolerance: any new hardcoded value fails the build.
+  </p>
+
+  <h3>3. Get PR Comments</h3>
+
+  <pre><code>buoy ci --github-comment</code></pre>
+
+  <p>
+    Buoy comments on PRs showing exactly what drifted and how to fix it.
+  </p>
+
+  <h2>Buoy in Agent Workflows</h2>
+
+  <p>
+    AI agents like Claude Code, Cursor, and Copilot Workspace don't just suggest code—they
+    write entire features autonomously. This changes everything about how we maintain
+    design systems.
+  </p>
+
+  <h3>The Agent Loop</h3>
+
+  <p>
+    Modern AI agents work in a loop: write code, run tests, fix errors, repeat until
+    the tests pass. Buoy plugs directly into this loop:
+  </p>
+
+  <pre><code>Agent writes component
+       ↓
+   Tests pass ✓
+       ↓
+   Buoy runs ✗  ←  "padding: 15px not in design system"
+       ↓
+Agent fixes drift
+       ↓
+   Buoy runs ✓
+       ↓
+   Code ships</code></pre>
+
+  <p>
+    Without Buoy, the agent has no signal that the design is wrong. Tests pass,
+    types check, the code works—so the agent moves on. Drift accumulates silently.
+  </p>
+
+  <h3>Teaching Agents Your System</h3>
+
+  <p>
+    Buoy's output is designed to be actionable for both humans and agents:
+  </p>
+
+  <pre><code>~ Hardcoded Value
+  File: src/components/Card.tsx:3
+  Found: padding: 15px
+  Expected: 16px (--spacing-4)
+
+  Suggestion: Replace with var(--spacing-4) or theme.spacing[4]</code></pre>
+
+  <p>
+    When an agent sees this output, it knows exactly what to fix. The agent doesn't
+    need to understand your entire design system—it just needs to follow Buoy's
+    suggestions.
+  </p>
+
+  <h3>Pre-commit Hooks</h3>
+
+  <p>
+    Add Buoy to your pre-commit workflow so agents get feedback before pushing:
+  </p>
+
+  <pre><code># .husky/pre-commit
+buoy ci --strict</code></pre>
+
+  <p>
+    Now when an agent runs <code>git commit</code>, Buoy blocks the commit if there's
+    drift. The agent sees the error, fixes it, and tries again.
+  </p>
+
+  <h3>Agent Instructions</h3>
+
+  <p>
+    Add Buoy to your agent's system prompt or project instructions:
+  </p>
+
+  <pre><code># CLAUDE.md / .cursorrules / copilot-instructions.md
+
+## Design System
+
+Before committing UI changes, run `buoy ci` to check for design drift.
+If Buoy reports issues, fix them before committing.
+
+Our design tokens:
+- Spacing: 4px, 8px, 16px, 24px, 32px
+- Colors: Use CSS variables from tokens.css
+- Radii: 4px, 8px, 16px</code></pre>
+
+  <p>
+    This gives agents context about your system AND a tool to verify their work.
+  </p>
+
+  <h2>The AI-Era Design System</h2>
+
+  <p>
+    AI is writing more of our code every day. That's not going to change.
+    What needs to change is how we validate that code.
+  </p>
+
+  <p>
+    A modern design system needs:
+  </p>
+
+  <ul>
+    <li><strong>Tokens</strong> — The design decisions (you have this)</li>
+    <li><strong>Components</strong> — The implementation (you have this)</li>
+    <li><strong>Validation</strong> — Automated enforcement (this is Buoy)</li>
+  </ul>
+
+  <p>
+    Without validation, your tokens and components are suggestions. With Buoy,
+    they become requirements.
+  </p>
+
+  <h2>Related</h2>
+
+  <ul>
+    <li><a href="/docs/cli/ci">buoy ci</a> — Add to your CI pipeline</li>
+    <li><a href="/docs/integrations/github-actions">GitHub Actions</a> — Full CI setup</li>
+    <li><a href="/docs/features/health-scoring">Health Scoring</a> — How scores work</li>
+  </ul>
+</DocsLayout>

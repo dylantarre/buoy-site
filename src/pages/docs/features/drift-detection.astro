@@ -1,0 +1,133 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="Drift Detection" description="How Buoy detects design system drift">
+  <h1>Drift Detection</h1>
+
+  <p>
+    Buoy detects when code diverges from your design system. This happens gradually as
+    developers (and AI tools) introduce hardcoded values, typos, and inconsistent patterns.
+  </p>
+
+  <h2>What is Design Drift?</h2>
+
+  <p>
+    Design drift is the accumulation of small inconsistencies that erode your design system
+    over time:
+  </p>
+
+  <ul>
+    <li>A developer eyeballs a color: <code>#3b83f6</code> instead of <code>#3b82f6</code></li>
+    <li>AI generates <code>padding: 15px</code> instead of your 16px spacing token</li>
+    <li>Someone copy-pastes a button with hardcoded styles</li>
+    <li>A new team member uses <code>gray-600</code> when your system uses <code>slate-600</code></li>
+  </ul>
+
+  <p>
+    After months, you end up with 47 shades of "blue" and inconsistent spacing everywhere.
+  </p>
+
+  <h2>Types of Drift</h2>
+
+  <h3>Hardcoded Values</h3>
+
+  <p>Raw values used instead of design tokens:</p>
+
+  <pre><code>// Drift: hardcoded color
+&lt;div style=&#123;&#123; color: '#3b82f6' &#125;&#125;&gt;
+
+// Should be:
+&lt;div style=&#123;&#123; color: theme.colors.blue[500] &#125;&#125;&gt;</code></pre>
+
+  <h3>Close Matches (Typos)</h3>
+
+  <p>Values that are almost—but not quite—a design token:</p>
+
+  <pre><code>// Typo: #3b83f6 (wrong digit)
+// Token: #3b82f6
+
+// Typo: 15px (off-by-one)
+// Token: 16px</code></pre>
+
+  <h3>Naming Inconsistencies</h3>
+
+  <p>Components or classes that don't follow naming conventions:</p>
+
+  <pre><code>// Inconsistent: PrimaryBtn, primary_button, PrimaryButton
+// Convention: PrimaryButton</code></pre>
+
+  <h3>Deprecated Patterns</h3>
+
+  <p>Using old patterns that have been replaced:</p>
+
+  <pre><code>// Deprecated: inline styles
+&lt;div style="padding: 16px"&gt;
+
+// Current: utility classes
+&lt;div class="p-4"&gt;</code></pre>
+
+  <h2>How Detection Works</h2>
+
+  <ol>
+    <li><strong>Scan</strong> — Buoy parses your source files to extract all style values</li>
+    <li><strong>Normalize</strong> — Values are normalized (e.g., <code>rgb()</code> to hex)</li>
+    <li><strong>Compare</strong> — Each value is compared against your design tokens</li>
+    <li><strong>Classify</strong> — Mismatches are classified by type and severity</li>
+    <li><strong>Report</strong> — Results show location, context, and suggestions</li>
+  </ol>
+
+  <h2>Severity Levels</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Description</th>
+        <th>Examples</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>High</strong></td>
+        <td>Likely bugs or significant deviation</td>
+        <td>Typos (close matches), completely wrong values</td>
+      </tr>
+      <tr>
+        <td><strong>Medium</strong></td>
+        <td>Hardcoded values that should use tokens</td>
+        <td>Inline styles, raw hex colors</td>
+      </tr>
+      <tr>
+        <td><strong>Low</strong></td>
+        <td>Minor inconsistencies</td>
+        <td>Naming variations, deprecated but functional</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>AI-Specific Detection</h2>
+
+  <p>
+    AI code generation tools (Copilot, Claude, etc.) often introduce drift because they:
+  </p>
+
+  <ul>
+    <li>Don't have access to your design tokens</li>
+    <li>Generate "reasonable" values from training data</li>
+    <li>Copy patterns from similar but different projects</li>
+  </ul>
+
+  <p>
+    Buoy is designed to catch these issues before they're committed, making it ideal
+    for teams using AI-assisted development.
+  </p>
+
+  <h2>Related</h2>
+
+  <ul>
+    <li><a href="/docs/cli/drift">buoy drift</a> — Run drift detection</li>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Get health report</li>
+    <li><a href="/docs/features/health-scoring">Health Scoring</a> — How scores work</li>
+  </ul>
+</DocsLayout>

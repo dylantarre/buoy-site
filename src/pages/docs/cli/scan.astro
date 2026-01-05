@@ -1,0 +1,131 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="buoy scan" description="Scan your codebase for components and tokens">
+  <h1>buoy scan</h1>
+
+  <p>
+    Scan your codebase to extract components and design tokens. This is the foundation for all
+    other Buoy commands.
+  </p>
+
+  <h2>Usage</h2>
+
+  <pre><code>buoy scan [options]</code></pre>
+
+  <h2>Options</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--json</code></td>
+        <td>Output as JSON for scripting</td>
+      </tr>
+      <tr>
+        <td><code>--include &lt;glob&gt;</code></td>
+        <td>Include additional file patterns</td>
+      </tr>
+      <tr>
+        <td><code>--exclude &lt;glob&gt;</code></td>
+        <td>Exclude file patterns</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>What It Scans</h2>
+
+  <p>Buoy automatically detects and scans:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Framework</th>
+        <th>What's Extracted</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>React</td>
+        <td>Components, props, inline styles</td>
+      </tr>
+      <tr>
+        <td>Vue</td>
+        <td>Components, scoped styles</td>
+      </tr>
+      <tr>
+        <td>Svelte</td>
+        <td>Components, style blocks</td>
+      </tr>
+      <tr>
+        <td>Angular</td>
+        <td>Components, stylesheets</td>
+      </tr>
+      <tr>
+        <td>Tailwind</td>
+        <td>Config tokens, arbitrary values</td>
+      </tr>
+      <tr>
+        <td>CSS/SCSS</td>
+        <td>Custom properties, values</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Example Output</h2>
+
+  <pre><code>$ buoy scan
+
+Scanning codebase...
+
+Components found: 47
+  React: 45
+  Vue: 2
+
+Design tokens extracted:
+  Colors: 23 unique values
+  Spacing: 14 unique values
+  Typography: 8 unique values
+  Border radius: 5 unique values
+
+Files scanned: 156
+Time: 1.2s</code></pre>
+
+  <h2>JSON Output</h2>
+
+  <pre><code>buoy scan --json</code></pre>
+
+  <pre><code set:text={`{
+  "components": [
+    {
+      "name": "Button",
+      "file": "src/components/Button.tsx",
+      "framework": "react",
+      "props": ["variant", "size", "disabled"]
+    }
+  ],
+  "tokens": {
+    "color": [
+      { "value": "#3b82f6", "count": 23 },
+      { "value": "#ef4444", "count": 15 }
+    ],
+    "spacing": [
+      { "value": "16px", "count": 45 }
+    ]
+  }
+}`} /></pre>
+
+  <h2>Related Commands</h2>
+
+  <ul>
+    <li><a href="/docs/cli/status">buoy status</a> — Visual coverage grid</li>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Health report</li>
+    <li><a href="/docs/cli/drift">buoy drift</a> — Detailed drift analysis</li>
+  </ul>
+</DocsLayout>

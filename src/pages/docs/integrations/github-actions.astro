@@ -1,0 +1,183 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="GitHub Actions" description="Add Buoy to your CI pipeline">
+  <h1>GitHub Actions</h1>
+
+  <p>
+    Add Buoy to your CI pipeline to catch design drift before it's merged. Get PR comments
+    with health scores and specific issues.
+  </p>
+
+  <h2>Quick Setup</h2>
+
+  <p>Create <code>.github/workflows/buoy.yml</code>:</p>
+
+  <pre><code>name: Design System Check
+
+on:
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  buoy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Buoy
+        run: npx @buoy-design/cli ci --threshold 60</code></pre>
+
+  <h2>With PR Comments</h2>
+
+  <p>Add a comment to each PR with the health report:</p>
+
+  <pre><code>name: Design System Check
+
+on:
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  buoy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Buoy
+        run: npx @buoy-design/cli ci --threshold 60 --github-comment
+        env:
+          GITHUB_TOKEN: $&#123;&#123; secrets.GITHUB_TOKEN &#125;&#125;</code></pre>
+
+  <h2>PR Comment Example</h2>
+
+  <p>The PR comment looks like:</p>
+
+  <pre><code>## 🚢 Buoy Design System Check
+
+**Health Score: 67/100** (Fair)
+
+### Summary
+- 23 hardcoded color values
+- 14 non-standard spacing values
+- 3 possible typos detected
+
+### Files Changed in This PR
+| File | Issues |
+|------|--------|
+| src/pages/Dashboard.tsx | 12 new issues |
+| src/components/Card.tsx | 5 new issues |
+
+### Suggested Fixes
+- `#3b83f6` → `#3b82f6` (typo in Dashboard.tsx:14)
+- `15px` → `16px` (use spacing token in Card.tsx:28)
+
+---
+*Run `buoy audit` locally for full report*</code></pre>
+
+  <h2>Configuration Options</h2>
+
+  <h3>Threshold</h3>
+
+  <p>Set a minimum passing score:</p>
+
+  <pre><code># Fail if score below 70
+npx @buoy-design/cli ci --threshold 70
+
+# Zero tolerance - fail on any drift
+npx @buoy-design/cli ci --strict</code></pre>
+
+  <h3>Compare Against Base Branch</h3>
+
+  <p>Only report new issues introduced in the PR:</p>
+
+  <pre><code>- name: Run Buoy
+  run: npx @buoy-design/cli ci --compare-base origin/main</code></pre>
+
+  <h2>Monorepo Setup</h2>
+
+  <p>For monorepos, specify the path:</p>
+
+  <pre><code>- name: Run Buoy
+  run: npx @buoy-design/cli ci --threshold 60
+  working-directory: ./packages/web</code></pre>
+
+  <h2>Caching</h2>
+
+  <p>Speed up runs with caching:</p>
+
+  <pre><code>- uses: actions/cache@v4
+  with:
+    path: ~/.npm
+    key: $&#123;&#123; runner.os &#125;&#125;-node-$&#123;&#123; hashFiles('**/package-lock.json') &#125;&#125;
+
+- name: Install dependencies
+  run: npm ci
+
+- name: Run Buoy
+  run: npx @buoy-design/cli ci --threshold 60</code></pre>
+
+  <h2>Multiple Frameworks</h2>
+
+  <p>If you have multiple apps in a monorepo:</p>
+
+  <pre><code>jobs:
+  buoy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [web, admin, mobile]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm ci
+        working-directory: ./apps/$&#123;&#123; matrix.app &#125;&#125;
+
+      - run: npx @buoy-design/cli ci --threshold 60
+        working-directory: ./apps/$&#123;&#123; matrix.app &#125;&#125;</code></pre>
+
+  <h2>Troubleshooting</h2>
+
+  <h3>Token Not Found</h3>
+
+  <p>If you get permission errors, ensure:</p>
+
+  <pre><code>permissions:
+  pull-requests: write</code></pre>
+
+  <h3>No Issues Detected</h3>
+
+  <p>Verify Buoy can find your files:</p>
+
+  <pre><code>npx @buoy-design/cli scan --json</code></pre>
+
+  <h2>Related</h2>
+
+  <ul>
+    <li><a href="/docs/cli/ci">buoy ci</a> — CI command reference</li>
+    <li><a href="/docs/configuration">Configuration</a> — buoy.config.mjs options</li>
+    <li><a href="/docs/features/health-scoring">Health Scoring</a> — How scores work</li>
+  </ul>
+</DocsLayout>

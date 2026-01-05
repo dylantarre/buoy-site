@@ -1,0 +1,91 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="Introduction" description="Get started with Buoy - design drift detection for the AI era">
+  <h1>Introduction to Buoy</h1>
+
+  <p>
+    Buoy is a design drift detection tool for AI-generated code. It scans your codebase to catch when developers
+    (especially AI tools like Copilot and Claude) diverge from design system patterns before code ships.
+  </p>
+
+  <h2>The Missing Feedback Loop</h2>
+
+  <p>
+    In development, we have robust feedback mechanisms: tests catch bugs, linters enforce style,
+    type checkers prevent errors. These tools give developers immediate signals when something is wrong.
+  </p>
+
+  <p>
+    Design systems have no equivalent. When AI generates <code>padding: 15px</code> instead of your
+    16px token, nothing breaks. No test fails. No error appears. The code ships, and your design
+    system slowly erodes.
+  </p>
+
+  <p>
+    <strong>Buoy is that missing feedback loop.</strong> It's the linter for your design system—a
+    source of truth that tells AI and developers alike: "This doesn't match the system."
+  </p>
+
+  <h2>What is Design Drift?</h2>
+
+  <p>
+    Design drift happens when code gradually diverges from your design system. It's the accumulation of small
+    inconsistencies that add up over time:
+  </p>
+
+  <ul>
+    <li>A developer eyeballs a color and types <code>#3b83f6</code> instead of <code>#3b82f6</code></li>
+    <li>AI generates a component with <code>padding: 15px</code> instead of your 16px spacing token</li>
+    <li>Someone copy-pastes a button with hardcoded styles instead of using the design system component</li>
+  </ul>
+
+  <p>
+    After 6 months, you end up with 47 shades of "blue" and 12 different spacing values. Buoy catches this drift
+    before it ships.
+  </p>
+
+  <h2>Quick Example</h2>
+
+  <pre><code>$ npx @buoy-design/cli audit
+
+Design System Health Report
+───────────────────────────
+
+Overall Score: 34/100 (Poor)
+
+Colors
+  Found: 47 unique values
+  Expected: ~12
+  Drift: +35 extra colors
+
+Spacing
+  Found: 31 unique values
+  Expected: ~8
+  Drift: +23 extra values
+
+Worst Files
+  src/pages/Dashboard.tsx     47 issues
+  src/components/Card.tsx     38 issues
+</code></pre>
+
+  <h2>Key Features</h2>
+
+  <ul>
+    <li><strong>Zero Config</strong> — Auto-detects React, Vue, Svelte, Angular, Tailwind</li>
+    <li><strong>Health Scoring</strong> — 0-100 score showing your design system health</li>
+    <li><strong>Token Comparison</strong> — Compare against Figma/Tokens Studio exports</li>
+    <li><strong>CI Integration</strong> — Catch drift in pull requests before merge</li>
+    <li><strong>Typo Detection</strong> — Finds values that are "close" to tokens (likely mistakes)</li>
+  </ul>
+
+  <h2>Next Steps</h2>
+
+  <ul>
+    <li><a href="/docs/installation">Installation</a> — Install Buoy in your project</li>
+    <li><a href="/docs/quick-start">Quick Start</a> — Run your first scan</li>
+    <li><a href="/docs/cli/begin">buoy begin</a> — Interactive setup wizard</li>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Generate a health report</li>
+  </ul>
+</DocsLayout>

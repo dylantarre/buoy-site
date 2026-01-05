@@ -1,0 +1,168 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="buoy ci" description="CI-optimized output with exit codes">
+  <h1>buoy ci</h1>
+
+  <p>
+    Run Buoy in CI mode with exit codes and optional GitHub PR comments. Designed for
+    continuous integration pipelines.
+  </p>
+
+  <h2>Usage</h2>
+
+  <pre><code>buoy ci [options]</code></pre>
+
+  <h2>Options</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--strict</code></td>
+        <td>Exit with code 1 if any drift detected</td>
+      </tr>
+      <tr>
+        <td><code>--threshold &lt;n&gt;</code></td>
+        <td>Minimum health score to pass (0-100)</td>
+      </tr>
+      <tr>
+        <td><code>--github-comment</code></td>
+        <td>Post results as PR comment</td>
+      </tr>
+      <tr>
+        <td><code>--json</code></td>
+        <td>Output as JSON</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Exit Codes</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>0</code></td>
+        <td>Pass — No drift or within threshold</td>
+      </tr>
+      <tr>
+        <td><code>1</code></td>
+        <td>Fail — Drift detected (with --strict) or below threshold</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Example Output</h2>
+
+  <pre><code>$ buoy ci --threshold 70
+
+Design System CI Check
+──────────────────────
+
+Health Score: 67/100 (Fair)
+Threshold: 70
+
+Status: FAIL ✗
+
+Summary:
+  • 23 hardcoded color values
+  • 14 non-standard spacing values
+  • 3 possible typos detected
+
+Worst files:
+  src/pages/Dashboard.tsx     47 issues
+  src/components/Card.tsx     23 issues
+
+Exit code: 1</code></pre>
+
+  <h2>GitHub Actions Example</h2>
+
+  <pre><code>name: Design System Check
+
+on: [pull_request]
+
+jobs:
+  buoy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Buoy
+        run: npx @buoy-design/cli ci --threshold 60
+        env:
+          GITHUB_TOKEN: $&#123;&#123; secrets.GITHUB_TOKEN &#125;&#125;</code></pre>
+
+  <h2>PR Comments</h2>
+
+  <p>With <code>--github-comment</code>, Buoy posts a summary to your PR:</p>
+
+  <pre><code>buoy ci --github-comment</code></pre>
+
+  <p>The comment includes:</p>
+  <ul>
+    <li>Health score with visual indicator</li>
+    <li>Top issues found</li>
+    <li>Files with the most drift</li>
+    <li>Comparison to base branch (if available)</li>
+  </ul>
+
+  <p>
+    See <a href="/docs/integrations/github-actions">GitHub Actions</a> for detailed setup.
+  </p>
+
+  <h2>Threshold Examples</h2>
+
+  <pre><code># Must score at least 80 to pass
+buoy ci --threshold 80
+
+# Fail on any drift (zero tolerance)
+buoy ci --strict
+
+# Just report, never fail
+buoy ci --threshold 0</code></pre>
+
+  <h2>JSON Output</h2>
+
+  <pre><code>buoy ci --json</code></pre>
+
+  <pre><code set:text={`{
+  "score": 67,
+  "threshold": 70,
+  "passed": false,
+  "summary": {
+    "hardcodedValues": 23,
+    "spacingIssues": 14,
+    "possibleTypos": 3
+  },
+  "worstFiles": [
+    { "file": "src/pages/Dashboard.tsx", "issues": 47 }
+  ]
+}`} /></pre>
+
+  <h2>Related Commands</h2>
+
+  <ul>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Interactive health report</li>
+    <li><a href="/docs/cli/drift">buoy drift</a> — Detailed drift analysis</li>
+    <li><a href="/docs/integrations/github-actions">GitHub Actions</a> — Full CI setup guide</li>
+  </ul>
+</DocsLayout>

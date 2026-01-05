@@ -1,0 +1,159 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="buoy drift" description="Detect and analyze design drift">
+  <h1>buoy drift</h1>
+
+  <p>
+    Detect design drift in your codebase. Shows detailed information about each instance where
+    code diverges from your design system.
+  </p>
+
+  <h2>Usage</h2>
+
+  <pre><code>buoy drift check [options]</code></pre>
+
+  <h2>Options</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--type &lt;type&gt;</code></td>
+        <td>Filter by drift type (color, spacing, typography)</td>
+      </tr>
+      <tr>
+        <td><code>--severity &lt;level&gt;</code></td>
+        <td>Filter by severity (high, medium, low)</td>
+      </tr>
+      <tr>
+        <td><code>--file &lt;path&gt;</code></td>
+        <td>Check specific file only</td>
+      </tr>
+      <tr>
+        <td><code>--json</code></td>
+        <td>Output as JSON for scripting</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Drift Types</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>hardcoded-value</code></td>
+        <td>Raw values instead of design tokens</td>
+      </tr>
+      <tr>
+        <td><code>close-match</code></td>
+        <td>Values near tokens (likely typos)</td>
+      </tr>
+      <tr>
+        <td><code>naming-inconsistency</code></td>
+        <td>Component names that don't follow conventions</td>
+      </tr>
+      <tr>
+        <td><code>deprecated-pattern</code></td>
+        <td>Usage of deprecated design patterns</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Example Output</h2>
+
+  <pre><code>$ buoy drift check
+
+Drift Analysis
+──────────────
+
+~ Hardcoded Value
+  Component: Card
+  Location:  src/components/Card.tsx:14
+  Issue:     backgroundColor: #f9fafb (not a design token)
+
+  Actions:
+    1. Replace with design token
+    2. Example: var(--color-gray-50) or theme.colors.gray[50]
+
+~ Close Match (Possible Typo)
+  Component: Button
+  Location:  src/components/Button.tsx:28
+  Issue:     color: #3b83f6 (close to #3b82f6)
+
+  Actions:
+    1. Verify if this is intentional
+    2. If typo, replace with #3b82f6
+
+~ Hardcoded Value
+  Component: Modal
+  Location:  src/components/Modal.tsx:45
+  Issue:     padding: 15px (not a spacing token)
+
+  Actions:
+    1. Use spacing token: 16px (--spacing-4)
+
+──────────────────────────────────────
+Total: 47 drift signals found
+  High severity: 12
+  Medium severity: 23
+  Low severity: 12</code></pre>
+
+  <h2>Filtering Examples</h2>
+
+  <pre><code># Only color issues
+buoy drift check --type color
+
+# Only high severity
+buoy drift check --severity high
+
+# Specific file
+buoy drift check --file src/components/Card.tsx
+
+# Combine filters
+buoy drift check --type spacing --severity high</code></pre>
+
+  <h2>JSON Output</h2>
+
+  <pre><code>buoy drift check --json</code></pre>
+
+  <pre><code set:text={`{
+  "signals": [
+    {
+      "type": "hardcoded-value",
+      "severity": "medium",
+      "file": "src/components/Card.tsx",
+      "line": 14,
+      "category": "color",
+      "value": "#f9fafb",
+      "suggestion": "var(--color-gray-50)"
+    }
+  ],
+  "summary": {
+    "total": 47,
+    "high": 12,
+    "medium": 23,
+    "low": 12
+  }
+}`} /></pre>
+
+  <h2>Related Commands</h2>
+
+  <ul>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Health report with overall score</li>
+    <li><a href="/docs/cli/compare">buoy compare</a> — Compare against design tokens file</li>
+    <li><a href="/docs/cli/ci">buoy ci</a> — CI-optimized output</li>
+  </ul>
+</DocsLayout>

@@ -1,0 +1,91 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="buoy status" description="Show design system coverage status">
+  <h1>buoy status</h1>
+
+  <p>
+    Display a visual coverage grid showing what Buoy has detected in your codebase. Great for
+    getting a quick overview of your design system usage.
+  </p>
+
+  <h2>Usage</h2>
+
+  <pre><code>buoy status [options]</code></pre>
+
+  <h2>Options</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--json</code></td>
+        <td>Output as JSON for scripting</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Example Output</h2>
+
+  <pre><code>$ buoy status
+
+Design System Coverage
+──────────────────────
+
+Components
+  ████████████████████░░░░  85% (42/49 using design system)
+
+Token Categories
+  Colors      ████████████░░░░░░░░  60% compliant
+  Spacing     ██████████████░░░░░░  70% compliant
+  Typography  ████████████████████  100% compliant
+  Radius      ████████████████░░░░  80% compliant
+
+Top Issues
+  • 23 hardcoded color values
+  • 14 non-standard spacing values
+  • 3 deprecated patterns
+
+Run `buoy audit` for detailed health report.</code></pre>
+
+  <h2>Understanding Coverage</h2>
+
+  <p>Coverage is calculated based on:</p>
+
+  <ul>
+    <li><strong>Components</strong> — Percentage using design tokens vs hardcoded values</li>
+    <li><strong>Token compliance</strong> — Values that match your design system vs custom values</li>
+  </ul>
+
+  <h2>JSON Output</h2>
+
+  <pre><code>buoy status --json</code></pre>
+
+  <pre><code set:text={`{
+  "components": {
+    "total": 49,
+    "compliant": 42,
+    "percentage": 85
+  },
+  "categories": {
+    "color": { "compliant": 60, "issues": 23 },
+    "spacing": { "compliant": 70, "issues": 14 },
+    "typography": { "compliant": 100, "issues": 0 },
+    "radius": { "compliant": 80, "issues": 3 }
+  }
+}`} /></pre>
+
+  <h2>Related Commands</h2>
+
+  <ul>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Detailed health report with score</li>
+    <li><a href="/docs/cli/drift">buoy drift</a> — See specific drift signals</li>
+    <li><a href="/docs/cli/scan">buoy scan</a> — Rescan the codebase</li>
+  </ul>
+</DocsLayout>

@@ -1,0 +1,79 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="Installation" description="Install Buoy in your project">
+  <h1>Installation</h1>
+
+  <p>
+    Buoy can be installed as a dev dependency in your project or run directly with npx.
+  </p>
+
+  <h2>Using npx (Recommended for trying out)</h2>
+
+  <p>Run Buoy without installing:</p>
+
+  <pre><code>npx @buoy-design/cli audit</code></pre>
+
+  <p>This is the fastest way to see what Buoy finds in your codebase.</p>
+
+  <h2>Installing as a Dev Dependency</h2>
+
+  <p>For ongoing use, install Buoy in your project:</p>
+
+  <pre><code># npm
+npm install --save-dev @buoy-design/cli
+
+# pnpm
+pnpm add -D @buoy-design/cli
+
+# yarn
+yarn add -D @buoy-design/cli</code></pre>
+
+  <p>Then run with npx or add to your package.json scripts:</p>
+
+  <pre><code set:text={`{
+  "scripts": {
+    "lint:design": "buoy audit",
+    "ci:design": "buoy ci --strict"
+  }
+}`} /></pre>
+
+  <h2>Global Installation</h2>
+
+  <p>Install globally to use <code>buoy</code> anywhere:</p>
+
+  <pre><code>npm install -g @buoy-design/cli</code></pre>
+
+  <h2>Requirements</h2>
+
+  <ul>
+    <li>Node.js 18 or higher</li>
+    <li>A frontend codebase (React, Vue, Svelte, Angular, or plain CSS)</li>
+  </ul>
+
+  <h2>Verify Installation</h2>
+
+  <pre><code>$ buoy --version
+0.1.0
+
+$ buoy --help
+Usage: buoy [command] [options]
+
+Commands:
+  init        Initialize Buoy configuration
+  scan        Scan for components and tokens
+  status      Show design system coverage
+  audit       Generate health report
+  drift       Detect design drift
+  compare     Compare against design tokens
+  ci          CI-optimized output
+  ...</code></pre>
+
+  <h2>Next Steps</h2>
+
+  <ul>
+    <li><a href="/docs/quick-start">Quick Start</a> — Run your first scan</li>
+    <li><a href="/docs/configuration">Configuration</a> — Customize Buoy for your project</li>
+  </ul>
+</DocsLayout>

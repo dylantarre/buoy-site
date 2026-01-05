@@ -1,0 +1,153 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="buoy compare" description="Compare codebase against design tokens">
+  <h1>buoy compare</h1>
+
+  <p>
+    Compare your codebase values against a design tokens file. Identifies which values in
+    your code don't match any defined tokens.
+  </p>
+
+  <h2>Usage</h2>
+
+  <pre><code>buoy compare &lt;tokens-file&gt; [options]</code></pre>
+
+  <h2>Arguments</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Argument</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>&lt;tokens-file&gt;</code></td>
+        <td>Path to design tokens file (JSON, CSS, or SCSS)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Options</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--json</code></td>
+        <td>Output as JSON for scripting</td>
+      </tr>
+      <tr>
+        <td><code>--strict</code></td>
+        <td>Fail if any unmatched values found</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Supported Token Formats</h2>
+
+  <h3>Design Tokens JSON (W3C format)</h3>
+
+  <pre><code set:text={`{
+  "color": {
+    "primary": { "$value": "#3b82f6" },
+    "secondary": { "$value": "#64748b" }
+  },
+  "spacing": {
+    "sm": { "$value": "8px" },
+    "md": { "$value": "16px" }
+  }
+}`} /></pre>
+
+  <h3>Tokens Studio / Figma Export</h3>
+
+  <pre><code set:text={`{
+  "colors": {
+    "blue-500": "#3b82f6",
+    "gray-500": "#64748b"
+  }
+}`} /></pre>
+
+  <h3>CSS Custom Properties</h3>
+
+  <pre><code>:root {
+  --color-primary: #3b82f6;
+  --spacing-md: 16px;
+}</code></pre>
+
+  <h2>Example Output</h2>
+
+  <pre><code>$ buoy compare design-tokens.json
+
+Comparing against design-tokens.json...
+
+Token Coverage
+──────────────
+
+Colors
+  ✓ 18 values match tokens
+  ✗ 5 values not in tokens:
+      #f9fafb (used 3 times)
+      #374151 (used 2 times)
+      #3b83f6 (used 1 time) ← close to #3b82f6
+
+Spacing
+  ✓ 12 values match tokens
+  ✗ 2 values not in tokens:
+      15px (used 4 times) ← close to 16px
+      13px (used 1 time)
+
+Summary
+───────
+Token coverage: 87%
+Unmatched values: 7
+Close matches (possible typos): 2</code></pre>
+
+  <h2>With Figma Integration</h2>
+
+  <p>
+    If you have Figma connected, you can compare directly against your Figma file:
+  </p>
+
+  <pre><code># After running `buoy init` with Figma
+buoy compare --figma</code></pre>
+
+  <p>
+    See <a href="/docs/integrations/figma">Figma Integration</a> for setup instructions.
+  </p>
+
+  <h2>JSON Output</h2>
+
+  <pre><code>buoy compare tokens.json --json</code></pre>
+
+  <pre><code set:text={`{
+  "coverage": 87,
+  "matched": 30,
+  "unmatched": 7,
+  "categories": {
+    "color": {
+      "matched": 18,
+      "unmatched": [
+        { "value": "#f9fafb", "count": 3 },
+        { "value": "#3b83f6", "count": 1, "closeTo": "#3b82f6" }
+      ]
+    }
+  }
+}`} /></pre>
+
+  <h2>Related Commands</h2>
+
+  <ul>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Health report with typo detection</li>
+    <li><a href="/docs/cli/drift">buoy drift</a> — Detailed drift signals</li>
+    <li><a href="/docs/integrations/figma">Figma Integration</a> — Connect to Figma</li>
+  </ul>
+</DocsLayout>

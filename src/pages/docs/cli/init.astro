@@ -1,0 +1,81 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="buoy init" description="Initialize Buoy configuration in your project">
+  <h1>buoy init</h1>
+
+  <p>
+    Initialize Buoy in your project. Auto-detects frameworks and creates a configuration file.
+  </p>
+
+  <h2>Usage</h2>
+
+  <pre><code>buoy init [options]</code></pre>
+
+  <h2>Options</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>-y, --yes</code></td>
+        <td>Accept all defaults without prompting</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>What It Does</h2>
+
+  <ol>
+    <li><strong>Scans your project</strong> for package.json, config files, and source directories</li>
+    <li><strong>Detects frameworks</strong> like React, Vue, Svelte, Angular, and Tailwind</li>
+    <li><strong>Creates buoy.config.mjs</strong> with detected settings</li>
+  </ol>
+
+  <h2>Example</h2>
+
+  <pre><code>$ buoy init
+
+Detecting project configuration...
+
+Detected frameworks:
+  ✓ React (from package.json)
+  ✓ Tailwind CSS (from tailwind.config.js)
+
+Creating buoy.config.mjs...
+
+Done! Run `buoy audit` to see your design system health.</code></pre>
+
+  <h2>Generated Config</h2>
+
+  <p>The generated <code>buoy.config.mjs</code> looks like:</p>
+
+  <pre><code set:text={`export default {
+  sources: {
+    react: { enabled: true },
+    tailwind: { enabled: true },
+  },
+  include: ['src/**/*.{tsx,jsx,css}'],
+  exclude: ['node_modules', 'dist', 'build'],
+}`} /></pre>
+
+  <h2>Manual Configuration</h2>
+
+  <p>
+    You can also create <code>buoy.config.mjs</code> manually. See
+    <a href="/docs/configuration">Configuration</a> for all available options.
+  </p>
+
+  <h2>Related Commands</h2>
+
+  <ul>
+    <li><a href="/docs/cli/scan">buoy scan</a> — Scan after initialization</li>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Get health report</li>
+  </ul>
+</DocsLayout>

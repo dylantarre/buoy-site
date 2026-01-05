@@ -1,0 +1,156 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="Health Scoring" description="How Buoy calculates your design system health score">
+  <h1>Health Scoring</h1>
+
+  <p>
+    Buoy calculates a 0-100 health score that represents how well your codebase adheres to
+    your design system. Higher scores mean less drift.
+  </p>
+
+  <h2>Score Ranges</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Score</th>
+        <th>Rating</th>
+        <th>What It Means</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>80-100</strong></td>
+        <td>Good</td>
+        <td>Design system is well adopted. Minor issues only.</td>
+      </tr>
+      <tr>
+        <td><strong>50-79</strong></td>
+        <td>Fair</td>
+        <td>Some drift detected. Worth addressing before it grows.</td>
+      </tr>
+      <tr>
+        <td><strong>30-49</strong></td>
+        <td>Needs Work</td>
+        <td>Significant drift. Prioritize cleanup.</td>
+      </tr>
+      <tr>
+        <td><strong>0-29</strong></td>
+        <td>Poor</td>
+        <td>Major drift. Design system adoption is low.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>How Scores Are Calculated</h2>
+
+  <p>The score is based on three factors:</p>
+
+  <h3>1. Unique Value Count</h3>
+
+  <p>
+    Penalty for having more unique values than expected. A design system with 8 spacing
+    tokens shouldn't have 31 different spacing values in code.
+  </p>
+
+  <pre><code>Expected: 8 spacing values
+Found: 31 spacing values
+Penalty: proportional to excess (23 extra = significant penalty)</code></pre>
+
+  <h3>2. Close Matches (Typos)</h3>
+
+  <p>
+    High penalty for values that are "almost" correct. These are likely mistakes:
+  </p>
+
+  <pre><code>#3b83f6 close to #3b82f6 → high penalty
+15px close to 16px → high penalty</code></pre>
+
+  <h3>3. File Concentration</h3>
+
+  <p>
+    Penalty for files with many issues. A file with 47 drift signals suggests systemic
+    problems in that area.
+  </p>
+
+  <pre><code>Dashboard.tsx: 47 issues → penalty
+Card.tsx: 38 issues → penalty</code></pre>
+
+  <h2>Example Calculation</h2>
+
+  <pre><code>Starting score: 100
+
+Colors:
+  Expected: ~12, Found: 47
+  Penalty: -25
+
+Spacing:
+  Expected: ~8, Found: 31
+  Penalty: -20
+
+Close matches:
+  2 found
+  Penalty: -12
+
+Worst files:
+  3 files with 20+ issues
+  Penalty: -9
+
+Final score: 34/100 (Poor)</code></pre>
+
+  <h2>Improving Your Score</h2>
+
+  <h3>Quick Wins</h3>
+
+  <ul>
+    <li><strong>Fix typos first</strong> — Close matches are high-value fixes</li>
+    <li><strong>Target worst files</strong> — Cleaning up one bad file can boost score significantly</li>
+    <li><strong>Consolidate colors</strong> — Often many "blues" should be one token</li>
+  </ul>
+
+  <h3>Long-term Strategies</h3>
+
+  <ul>
+    <li><strong>Add to CI</strong> — Prevent new drift from being introduced</li>
+    <li><strong>Set thresholds</strong> — Require minimum scores for merge</li>
+    <li><strong>Track over time</strong> — Monitor score trends</li>
+  </ul>
+
+  <h2>Score in CI</h2>
+
+  <p>Use the score to gate PRs:</p>
+
+  <pre><code># Fail if score drops below 70
+buoy ci --threshold 70
+
+# Fail on any drift
+buoy ci --strict</code></pre>
+
+  <h2>Viewing Score Details</h2>
+
+  <pre><code>$ buoy audit
+
+Design System Health Report
+───────────────────────────
+
+Overall Score: 34/100 (Poor)
+
+Score Breakdown:
+  Base score:        100
+  Unique values:     -25
+  Close matches:     -12
+  File concentration: -9
+  Other penalties:   -20
+  ─────────────────────
+  Final:              34</code></pre>
+
+  <h2>Related</h2>
+
+  <ul>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Generate health report</li>
+    <li><a href="/docs/cli/ci">buoy ci</a> — Use score in CI</li>
+    <li><a href="/docs/features/drift-detection">Drift Detection</a> — Types of drift</li>
+  </ul>
+</DocsLayout>

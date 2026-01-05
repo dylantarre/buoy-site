@@ -1,0 +1,134 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="Quick Start" description="Run your first Buoy scan in 2 minutes">
+  <h1>Quick Start</h1>
+
+  <p>
+    Get a design system health report in under 2 minutes.
+  </p>
+
+  <h2>Interactive Setup (Recommended)</h2>
+
+  <p>The easiest way to get started is with the interactive wizard:</p>
+
+  <pre><code>npx @buoy-design/cli begin</code></pre>
+
+  <p>
+    This runs a scan, shows your results, and guides you through configuration.
+    <a href="/docs/cli/begin">Learn more about buoy begin</a>.
+  </p>
+
+  <h2>Step 1: Run the Audit</h2>
+
+  <p>From your project root, run:</p>
+
+  <pre><code>npx @buoy-design/cli audit</code></pre>
+
+  <p>Buoy will scan your codebase and show a health report:</p>
+
+  <pre><code>Design System Health Report
+───────────────────────────
+
+Overall Score: 67/100 (Fair)
+
+Colors
+  Found: 23 unique values
+  Expected: ~12
+  Drift: +11 extra colors
+  Most common:
+    #3b82f6  (15 usages)
+    #ef4444  (8 usages)
+    #10b981  (6 usages)
+
+Spacing
+  Found: 14 unique values
+  Expected: ~8
+  Drift: +6 extra values
+
+Worst Offenders
+   47 issues  src/pages/Dashboard.tsx
+   23 issues  src/components/Card.tsx
+   18 issues  src/components/Button.tsx</code></pre>
+
+  <h2>Step 2: Check Specific Drift</h2>
+
+  <p>Get detailed information about each issue:</p>
+
+  <pre><code>npx @buoy-design/cli drift check</code></pre>
+
+  <p>This shows exactly where hardcoded values appear:</p>
+
+  <pre><code>Drift Analysis
+──────────────
+
+~ Hardcoded Value
+  Component: Card
+  Location:  src/components/Card.tsx:14
+  Issue:     backgroundColor: #f9fafb (not a design token)
+
+  Actions:
+    1. Replace with design token
+    2. Example: var(--color-gray-50) or theme.colors.gray[50]</code></pre>
+
+  <h2>Step 3: Initialize Config (Optional)</h2>
+
+  <p>For ongoing use, generate a config file:</p>
+
+  <pre><code>npx @buoy-design/cli init</code></pre>
+
+  <p>This creates <code>buoy.config.mjs</code> with auto-detected settings:</p>
+
+  <pre><code set:text={`export default {
+  sources: {
+    react: { enabled: true },
+    tailwind: { enabled: true },
+  }
+}`} /></pre>
+
+  <h2>Common Commands</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>buoy begin</code></td>
+        <td>Interactive setup wizard</td>
+      </tr>
+      <tr>
+        <td><code>buoy audit</code></td>
+        <td>Health report with score</td>
+      </tr>
+      <tr>
+        <td><code>buoy drift check</code></td>
+        <td>Detailed drift signals</td>
+      </tr>
+      <tr>
+        <td><code>buoy status</code></td>
+        <td>Visual coverage grid</td>
+      </tr>
+      <tr>
+        <td><code>buoy compare tokens.json</code></td>
+        <td>Compare against design file</td>
+      </tr>
+      <tr>
+        <td><code>buoy ci</code></td>
+        <td>CI output with exit codes</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Next Steps</h2>
+
+  <ul>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Full audit command reference</li>
+    <li><a href="/docs/cli/compare">buoy compare</a> — Compare against Figma tokens</li>
+    <li><a href="/docs/integrations/github-actions">GitHub Actions</a> — Add to CI</li>
+  </ul>
+</DocsLayout>
