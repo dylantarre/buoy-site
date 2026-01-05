@@ -50,6 +50,8 @@ const { title, description, keywords, heroTitle, heroDescription } = Astro.props
       <Button href="/demo" size="lg">
         Get started free
       </Button>
+
+      <slot name="hero-extra" />
     </div>
   </section>
 
