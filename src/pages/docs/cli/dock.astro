@@ -1,0 +1,95 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="buoy dock" description="Dock Buoy into your project">
+  <h1>buoy dock</h1>
+
+  <p>
+    Dock Buoy into your project by creating configuration files and setting up
+    integrations. Auto-detects your framework and suggests optimal settings.
+  </p>
+
+  <h2>Usage</h2>
+
+  <pre><code>buoy dock [options]</code></pre>
+
+  <h2>Options</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>-f, --force</code></td>
+        <td>Overwrite existing configuration</td>
+      </tr>
+      <tr>
+        <td><code>-n, --name &lt;name&gt;</code></td>
+        <td>Project name</td>
+      </tr>
+      <tr>
+        <td><code>--skip-detect</code></td>
+        <td>Skip auto-detection and create minimal config</td>
+      </tr>
+      <tr>
+        <td><code>-y, --yes</code></td>
+        <td>Auto-install recommended plugins without prompting</td>
+      </tr>
+      <tr>
+        <td><code>--no-install</code></td>
+        <td>Skip plugin installation prompts</td>
+      </tr>
+      <tr>
+        <td><code>--hooks</code></td>
+        <td>Setup pre-commit hook for drift checking</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Example</h2>
+
+  <pre><code>$ buoy dock
+
+Detecting project configuration...
+
+Detected:
+  Framework: React
+  Styling: Tailwind CSS
+  Components: src/components/
+
+Creating buoy.config.mjs...
+
+✓ Created buoy.config.mjs
+✓ Added .buoy/ to .gitignore
+
+Buoy is now docked! Run 'buoy sweep' to scan your codebase.</code></pre>
+
+  <h2>With Hooks</h2>
+
+  <pre><code>$ buoy dock --hooks
+
+...
+✓ Created .git/hooks/pre-commit
+
+Pre-commit hook installed. Drift will be checked before each commit.</code></pre>
+
+  <h2>Generated Files</h2>
+
+  <ul>
+    <li><strong>buoy.config.mjs</strong> - Main configuration file</li>
+    <li><strong>.buoy/</strong> - Local data directory (added to .gitignore)</li>
+  </ul>
+
+  <h2>Related</h2>
+
+  <ul>
+    <li><a href="/docs/cli/begin">buoy begin</a> - Interactive setup wizard</li>
+    <li><a href="/docs/cli/sweep">buoy sweep</a> - Scan your codebase</li>
+    <li><a href="/docs/cli/onboard">buoy onboard</a> - Set up AI guardrails</li>
+  </ul>
+</DocsLayout>

@@ -1,0 +1,93 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro'
+---
+
+<DocsLayout title="buoy check" description="Fast drift check for pre-commit hooks">
+  <h1>buoy check</h1>
+
+  <p>
+    Fast drift check optimized for pre-commit hooks. Runs quickly and exits with
+    appropriate codes for CI/CD integration.
+  </p>
+
+  <h2>Usage</h2>
+
+  <pre><code>buoy check [options]</code></pre>
+
+  <h2>Options</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--fail-on &lt;severity&gt;</code></td>
+        <td>Exit 1 if drift at this severity or higher: critical, warning, info, none (default: "critical")</td>
+      </tr>
+      <tr>
+        <td><code>--staged</code></td>
+        <td>Only check staged files (for pre-commit hooks)</td>
+      </tr>
+      <tr>
+        <td><code>--quiet</code></td>
+        <td>Suppress all output except errors</td>
+      </tr>
+      <tr>
+        <td><code>-v, --verbose</code></td>
+        <td>Show detailed output</td>
+      </tr>
+      <tr>
+        <td><code>--format &lt;format&gt;</code></td>
+        <td>Output format: text, json, ai-feedback (default: "text")</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Pre-commit Hook Setup</h2>
+
+  <p>Add to your <code>.git/hooks/pre-commit</code>:</p>
+
+  <pre><code>#!/bin/sh
+buoy check --staged --fail-on critical</code></pre>
+
+  <p>Or with Husky in <code>.husky/pre-commit</code>:</p>
+
+  <pre><code>#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+npx buoy check --staged --fail-on critical</code></pre>
+
+  <h2>Example Output</h2>
+
+  <pre><code>$ buoy check --staged
+
+Checking 3 staged files...
+
+CRITICAL (1)
+  Button.tsx:12 - Hardcoded color #3b82f6
+
+Exit code: 1</code></pre>
+
+  <h2>AI Feedback Format</h2>
+
+  <p>Use <code>--format ai-feedback</code> for output optimized for AI code review:</p>
+
+  <pre><code>$ buoy check --format ai-feedback
+
+Design System Violations Found:
+
+1. Button.tsx:12
+   Issue: Hardcoded color value
+   Fix: Replace #3b82f6 with var(--color-primary)</code></pre>
+
+  <h2>Related</h2>
+
+  <ul>
+    <li><a href="/docs/cli/drift">buoy drift</a> - Full drift detection with more options</li>
+    <li><a href="/docs/cli/fix">buoy fix</a> - Auto-fix detected issues</li>
+    <li><a href="/docs/cli/lighthouse">buoy lighthouse</a> - CI/CD integration</li>
+  </ul>
+</DocsLayout>
