@@ -133,16 +133,20 @@ import DocsLayout from '../../../layouts/DocsLayout.astro'
     Now when AI generates <code>padding: 15px</code>, Buoy catches it:
   </p>
 
-  <pre><code>$ buoy lighthouse
+  <pre><code>$ buoy check
 
-Design System Check Failed
+x Drift detected
+
+  Critical: 1
+  Warning:  0
+  Info:     0
 
 ~ Hardcoded Value
   File: src/components/Card.tsx:3
   Found: padding: 15px
   Expected: 16px (--spacing-4)
 
-Exit code: 1</code></pre>
+Run `buoy show drift` for details</code></pre>
 
   <h2>Source of Truth for AI</h2>
 
@@ -163,28 +167,28 @@ Exit code: 1</code></pre>
 
   <h2>How Teams Use This</h2>
 
-  <h3>1. Set a Health Threshold</h3>
+  <h3>1. Block on Critical Drift</h3>
 
-  <pre><code>buoy lighthouse --threshold 70</code></pre>
+  <pre><code>buoy check</code></pre>
 
   <p>
-    PRs must maintain at least 70% design system health to merge.
+    PRs fail if critical design system issues are found (default behavior).
   </p>
 
-  <h3>2. Block on New Drift</h3>
+  <h3>2. Stricter Enforcement</h3>
 
-  <pre><code>buoy lighthouse --strict</code></pre>
+  <pre><code>buoy check --fail-on warning</code></pre>
 
   <p>
-    Zero tolerance: any new hardcoded value fails the build.
+    Fail on warnings too, not just critical issues.
   </p>
 
   <h3>3. Get PR Comments</h3>
 
-  <pre><code>buoy lighthouse --github-comment</code></pre>
+  <pre><code>buoy check --preview-comment</code></pre>
 
   <p>
-    Buoy comments on PRs showing exactly what drifted and how to fix it.
+    Preview what a PR comment would look like with your drift results.
   </p>
 
   <h2>Buoy in Agent Workflows</h2>
@@ -245,7 +249,7 @@ Agent fixes drift
   </p>
 
   <pre><code># .husky/pre-commit
-buoy lighthouse --strict</code></pre>
+buoy check --staged</code></pre>
 
   <p>
     Now when an agent runs <code>git commit</code>, Buoy blocks the commit if there's
@@ -262,7 +266,7 @@ buoy lighthouse --strict</code></pre>
 
 ## Design System
 
-Before committing UI changes, run `buoy lighthouse` to check for design drift.
+Before committing UI changes, run `buoy check` to check for design drift.
 If Buoy reports issues, fix them before committing.
 
 Our design tokens:
@@ -299,7 +303,7 @@ Our design tokens:
   <h2>Related</h2>
 
   <ul>
-    <li><a href="/docs/cli/lighthouse">buoy ci</a> — Add to your CI pipeline</li>
+    <li><a href="/docs/cli/check">buoy check</a> — Add to your CI pipeline</li>
     <li><a href="/docs/integrations/github-actions">GitHub Actions</a> — Full CI setup</li>
     <li><a href="/docs/features/health-scoring">Health Scoring</a> — How scores work</li>
   </ul>

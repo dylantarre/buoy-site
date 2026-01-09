@@ -87,6 +87,27 @@ const features = [
     examples: ['React + Vue + ...'],
     href: '/features/framework-sprawl'
   },
+  {
+    title: 'Color Contrast',
+    description: 'Find colors that fail WCAG accessibility contrast ratios.',
+    icon: '🔲',
+    examples: ['AA fails', 'AAA fails'],
+    href: '/features/accessibility-checks'
+  },
+  {
+    title: 'Orphaned Components',
+    description: 'Components in code but missing from Figma or Storybook.',
+    icon: '👻',
+    examples: ['In code, not in design'],
+    href: '/features/drift-detection'
+  },
+  {
+    title: 'Unused Tokens',
+    description: 'Design tokens defined but never referenced in code.',
+    icon: '🗑️',
+    examples: ['--color-unused', '--space-deprecated'],
+    href: '/features/drift-detection'
+  },
 ]
 
 const integrations = [
@@ -112,7 +133,7 @@ const steps = [
     step: '2',
     title: 'Enforce',
     command: 'buoy ci',
-    description: 'Block drift at PR. Nothing bad reaches main.'
+    description: 'Catch drift at PR. Nothing bad reaches main.'
   },
   {
     step: '3',
@@ -255,7 +276,7 @@ const steps = [
       <!-- What Buoy catches -->
       <div class="mt-12 max-w-3xl mx-auto">
         <h3 class="text-2xl sm:text-3xl font-bold text-light mb-6 text-center">
-          🛟 Buoy plugs the holes.
+          🛟  Buoy plugs the holes.
         </h3>
         <div class="bg-navy/30 border border-buoy/20 rounded-xl p-6">
           <div class="text-sm font-semibold text-buoy mb-4">
@@ -284,6 +305,11 @@ const steps = [
               </div>
             </div>
           </div>
+        </div>
+        <div class="mt-6 text-center">
+          <a href="#features" class="text-buoy hover:text-buoy-light text-sm font-medium transition-colors">
+            See all drift types →
+          </a>
         </div>
       </div>
     </div>
@@ -316,7 +342,7 @@ const steps = [
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <h2 class="text-3xl sm:text-4xl font-bold text-light mb-4">
-          Block drift at the PR
+          Catch drift at the PR
         </h2>
         <p class="text-lg text-slate">
           Add Buoy to CI. Drift never reaches main.
@@ -464,7 +490,7 @@ const steps = [
           Detect. Enforce. Measure.
         </h2>
         <p class="text-lg text-slate">
-          Find drift, block it at CI, and track your progress.
+          Find drift, catch it at CI, and track your progress.
         </p>
       </div>
 
@@ -561,7 +587,7 @@ const steps = [
             </div>
             <div class="pt-4">
               <div class="text-4xl mb-4">🚦</div>
-              <h3 class="text-xl font-semibold text-light mb-2">Block at PR</h3>
+              <h3 class="text-xl font-semibold text-light mb-2">Catch at PR</h3>
               <p class="text-slate text-sm mb-4">
                 Add GitHub Action. Every PR gets checked. Drift blocked before merge.
               </p>

@@ -2,12 +2,12 @@
 import DocsLayout from '../../../layouts/DocsLayout.astro'
 ---
 
-<DocsLayout title="buoy check" description="Fast drift check for pre-commit hooks">
+<DocsLayout title="buoy check" description="Scan your codebase for components and tokens">
   <h1>buoy check</h1>
 
   <p>
-    Fast drift check optimized for pre-commit hooks. Runs quickly and exits with
-    appropriate codes for CI/CD integration.
+    Scan your codebase to extract components and design tokens. This is the foundation for all
+    other Buoy commands.
   </p>
 
   <h2>Usage</h2>
@@ -25,69 +25,107 @@ import DocsLayout from '../../../layouts/DocsLayout.astro'
     </thead>
     <tbody>
       <tr>
-        <td><code>--fail-on &lt;severity&gt;</code></td>
-        <td>Exit 1 if drift at this severity or higher: critical, warning, info, none (default: "critical")</td>
+        <td><code>--json</code></td>
+        <td>Output as JSON for scripting</td>
       </tr>
       <tr>
-        <td><code>--staged</code></td>
-        <td>Only check staged files (for pre-commit hooks)</td>
+        <td><code>--include &lt;glob&gt;</code></td>
+        <td>Include additional file patterns</td>
       </tr>
       <tr>
-        <td><code>--quiet</code></td>
-        <td>Suppress all output except errors</td>
-      </tr>
-      <tr>
-        <td><code>-v, --verbose</code></td>
-        <td>Show detailed output</td>
-      </tr>
-      <tr>
-        <td><code>--format &lt;format&gt;</code></td>
-        <td>Output format: text, json, ai-feedback (default: "text")</td>
+        <td><code>--exclude &lt;glob&gt;</code></td>
+        <td>Exclude file patterns</td>
       </tr>
     </tbody>
   </table>
 
-  <h2>Pre-commit Hook Setup</h2>
+  <h2>What It Scans</h2>
 
-  <p>Add to your <code>.git/hooks/pre-commit</code>:</p>
+  <p>Buoy automatically detects and scans:</p>
 
-  <pre><code>#!/bin/sh
-buoy check --staged --fail-on critical</code></pre>
-
-  <p>Or with Husky in <code>.husky/pre-commit</code>:</p>
-
-  <pre><code>#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-npx buoy check --staged --fail-on critical</code></pre>
+  <table>
+    <thead>
+      <tr>
+        <th>Framework</th>
+        <th>What's Extracted</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>React</td>
+        <td>Components, props, inline styles</td>
+      </tr>
+      <tr>
+        <td>Vue</td>
+        <td>Components, scoped styles</td>
+      </tr>
+      <tr>
+        <td>Svelte</td>
+        <td>Components, style blocks</td>
+      </tr>
+      <tr>
+        <td>Angular</td>
+        <td>Components, stylesheets</td>
+      </tr>
+      <tr>
+        <td>Tailwind</td>
+        <td>Config tokens, arbitrary values</td>
+      </tr>
+      <tr>
+        <td>CSS/SCSS</td>
+        <td>Custom properties, values</td>
+      </tr>
+    </tbody>
+  </table>
 
   <h2>Example Output</h2>
 
-  <pre><code>$ buoy check --staged
+  <pre><code>$ buoy check
 
-Checking 3 staged files...
+Scanning codebase...
 
-CRITICAL (1)
-  Button.tsx:12 - Hardcoded color #3b82f6
+Components found: 47
+  React: 45
+  Vue: 2
 
-Exit code: 1</code></pre>
+Design tokens extracted:
+  Colors: 23 unique values
+  Spacing: 14 unique values
+  Typography: 8 unique values
+  Border radius: 5 unique values
 
-  <h2>AI Feedback Format</h2>
+Files scanned: 156
+Time: 1.2s</code></pre>
 
-  <p>Use <code>--format ai-feedback</code> for output optimized for AI code review:</p>
+  <h2>JSON Output</h2>
 
-  <pre><code>$ buoy check --format ai-feedback
+  <pre><code>buoy check --json</code></pre>
 
-Design System Violations Found:
+  <pre><code>&#123;
+  "components": [
+    &#123;
+      "name": "Button",
+      "file": "src/components/Button.tsx",
+      "framework": "react",
+      "props": ["variant", "size", "disabled"]
+    &#125;
+  ],
+  "tokens": &#123;
+    "color": [
+      &#123; "value": "#3b82f6", "count": 23 &#125;,
+      &#123; "value": "#ef4444", "count": 15 &#125;
+    ],
+    "spacing": [
+      &#123; "value": "16px", "count": 45 &#125;
+    ]
+  &#125;
+&#125;</code></pre>
 
-1. Button.tsx:12
-   Issue: Hardcoded color value
-   Fix: Replace #3b82f6 with var(--color-primary)</code></pre>
-
-  <h2>Related</h2>
+  <h2>Related Commands</h2>
 
   <ul>
-    <li><a href="/docs/cli/drift">buoy drift</a> - Full drift detection with more options</li>
-    <li><a href="/docs/cli/fix">buoy fix</a> - Auto-fix detected issues</li>
-    <li><a href="/docs/cli/lighthouse">buoy lighthouse</a> - CI/CD integration</li>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Visual coverage grid</li>
+    <li><a href="/docs/cli/audit">buoy audit</a> — Health report</li>
+    <li><a href="/docs/cli/drift">buoy drift</a> — Detailed drift analysis</li>
   </ul>
 </DocsLayout>

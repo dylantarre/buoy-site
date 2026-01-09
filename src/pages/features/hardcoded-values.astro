@@ -6,7 +6,7 @@ import CodeBlock from '../../components/CodeBlock.astro'
 
 const terminalLines = [
   { text: '', delay: 600 },
-  { text: 'Found <span class="text-warning">47</span> hardcoded values — <span class="text-success">42 auto-fixable</span>', type: 'output', delay: 800 },
+  { text: 'Found <span class="text-warning">47</span> hardcoded values', type: 'output', delay: 800 },
   { text: '', delay: 1000 },
   { text: '<span class="text-slate">src/components/Card.tsx:12</span>', type: 'output', delay: 1200 },
   { text: '├─ #ffffff <span class="text-success">→ var(--bg-surface)</span>', type: 'warning', delay: 1400 },
@@ -17,22 +17,9 @@ const terminalLines = [
   { text: '├─ #0066ff <span class="text-success">→ var(--color-primary)</span>', type: 'warning', delay: 2400 },
   { text: '└─ 14px <span class="text-success">→ var(--text-sm)</span>', type: 'warning', delay: 2600 },
   { text: '', delay: 2800 },
-  { text: '<span class="text-buoy font-semibold">Run buoy fix --apply to apply 42 fixes</span>', type: 'output', delay: 3000 },
+  { text: '<span class="text-buoy font-semibold">Add to CI to catch at the PR →</span>', type: 'output', delay: 3000 },
 ]
 
-const fixTerminalLines = [
-  { text: '', delay: 600 },
-  { text: '<span class="text-buoy">⚓</span> Fixing hardcoded values...', type: 'output', delay: 800 },
-  { text: '', delay: 1200 },
-  { text: '<span class="text-success">✓</span> Card.tsx: 3 values → tokens', type: 'success', delay: 1400 },
-  { text: '<span class="text-success">✓</span> Button.tsx: 2 values → tokens', type: 'success', delay: 1600 },
-  { text: '<span class="text-success">✓</span> Header.tsx: 5 values → tokens', type: 'success', delay: 1800 },
-  { text: '<span class="text-slate-dark">... and 32 more files</span>', type: 'muted', delay: 2000 },
-  { text: '', delay: 2200 },
-  { text: '<span class="text-success font-semibold">42 hardcoded values replaced with tokens.</span>', type: 'output', delay: 2400 },
-  { text: '', delay: 2600 },
-  { text: 'Token coverage: <span class="text-warning">34%</span> → <span class="text-success">89%</span>', type: 'output', delay: 2800 },
-]
 
 const valueTypes = [
   { icon: '🎨', title: 'Colors', examples: ['#ffffff', 'rgb(255,255,255)', 'hsl(0,0%,100%)'] },
@@ -176,16 +163,37 @@ const faqs = [
     </div>
   </section>
 
-  <!-- Terminal Demo Section: Fix -->
+  <!-- CI Enforcement Section -->
   <section class="py-16 bg-navy">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-bold text-light mb-4 text-center">Step 2: Auto-Fix Them All</h2>
-      <p class="text-slate text-center mb-8">One command. Dozens of files fixed. Token coverage jumps.</p>
+      <h2 class="text-2xl font-bold text-light mb-4 text-center">Step 2: Catch at the PR</h2>
+      <p class="text-slate text-center mb-8">Add Buoy to CI. Hardcoded values never reach main.</p>
 
-      <Terminal
-        command="buoy fix --apply --type hardcoded-value"
-        lines={fixTerminalLines}
-      />
+      <!-- GitHub PR Check Style Card -->
+      <div class="bg-[#0d1117] border border-[#30363d] rounded-lg overflow-hidden shadow-xl">
+        <div class="px-4 py-3 border-b border-[#30363d] flex items-center gap-2">
+          <svg class="w-4 h-4 text-[#f85149]" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/>
+          </svg>
+          <span class="text-[#f85149] font-medium text-sm">Buoy Design Check — 2 hardcoded values found</span>
+        </div>
+        <div class="divide-y divide-[#30363d]">
+          <div class="px-4 py-3">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[#58a6ff] text-sm font-mono">src/components/Card.tsx</span>
+              <span class="text-[#8b949e] text-sm">line 12</span>
+            </div>
+            <p class="text-[#c9d1d9] text-sm">Hardcoded color <code class="px-1.5 py-0.5 bg-[#161b22] rounded text-[#f85149] text-xs">#ffffff</code> → Use <code class="px-1.5 py-0.5 bg-[#161b22] rounded text-[#7ee787] text-xs">var(--bg-surface)</code></p>
+          </div>
+          <div class="px-4 py-3">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[#58a6ff] text-sm font-mono">src/components/Card.tsx</span>
+              <span class="text-[#8b949e] text-sm">line 15</span>
+            </div>
+            <p class="text-[#c9d1d9] text-sm">Hardcoded spacing <code class="px-1.5 py-0.5 bg-[#161b22] rounded text-[#f85149] text-xs">16px</code> → Use <code class="px-1.5 py-0.5 bg-[#161b22] rounded text-[#7ee787] text-xs">var(--spacing-md)</code></p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -207,7 +215,7 @@ const faqs = [
           <div class="text-5xl font-bold text-success mb-2">89%</div>
           <div class="text-slate text-sm">Token Coverage After</div>
           <div class="mt-4 text-xs text-slate-dark">
-            42 values auto-fixed in under 5 seconds
+            42 issues caught before merge
           </div>
         </div>
       </div>

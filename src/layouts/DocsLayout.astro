@@ -11,7 +11,13 @@ interface Props {
 
 const { title, description, section } = Astro.props
 
-const docsSections = [
+interface DocItem {
+  label: string
+  href: string
+  indent?: boolean
+}
+
+const docsSections: { title: string; items: DocItem[] }[] = [
   {
     title: 'Getting Started',
     items: [
@@ -22,11 +28,12 @@ const docsSections = [
     ]
   },
   {
-    title: 'Setup Commands',
+    title: 'Setup',
     items: [
       { label: 'buoy begin', href: '/docs/cli/begin' },
-      { label: 'buoy sweep', href: '/docs/cli/sweep' },
       { label: 'buoy dock', href: '/docs/cli/dock' },
+      { label: 'buoy onboard', href: '/docs/cli/onboard' },
+      { label: 'buoy commands', href: '/docs/cli/commands' },
     ]
   },
   {
@@ -36,15 +43,6 @@ const docsSections = [
       { label: 'buoy check', href: '/docs/cli/check' },
       { label: 'buoy fix', href: '/docs/cli/fix' },
       { label: 'buoy baseline', href: '/docs/cli/baseline' },
-      { label: 'buoy lighthouse', href: '/docs/cli/lighthouse' },
-    ]
-  },
-  {
-    title: 'AI Integration',
-    items: [
-      { label: 'buoy onboard', href: '/docs/cli/onboard' },
-      { label: 'buoy skill', href: '/docs/cli/skill' },
-      { label: 'buoy context', href: '/docs/cli/context' },
     ]
   },
   {
@@ -62,6 +60,7 @@ const docsSections = [
       { label: 'buoy audit', href: '/docs/cli/audit' },
       { label: 'buoy graph', href: '/docs/cli/graph' },
       { label: 'buoy history', href: '/docs/cli/history' },
+      { label: 'buoy learn', href: '/docs/cli/learn' },
     ]
   },
   {

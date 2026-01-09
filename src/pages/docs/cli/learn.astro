@@ -89,14 +89,14 @@ Found 3 repeat patterns</code></pre>
   <h2>Building History</h2>
 
   <p>
-    <code>buoy learn</code> requires scan history. Run <code>buoy sweep</code> multiple
+    <code>buoy learn</code> requires scan history. Run <code>buoy check</code> multiple
     times to build up data. Each scan is stored locally and used for pattern analysis.
   </p>
 
   <pre><code># Build up scan history
-buoy sweep  # Run after making changes
-buoy sweep  # Run again later
-buoy sweep  # More data = better insights
+buoy check  # Run after making changes
+buoy check  # Run again later
+buoy check  # More data = better insights
 
 # Then analyze patterns
 buoy learn</code></pre>
@@ -128,7 +128,7 @@ buoy learn</code></pre>
   <h2>Related Commands</h2>
 
   <ul>
-    <li><a href="/docs/cli/sweep">buoy sweep</a> — Run scans to build history</li>
+    <li><a href="/docs/cli/check">buoy check</a> — Run scans to build history</li>
     <li><a href="/docs/cli/history">buoy history</a> — View scan history and trends</li>
     <li><a href="/docs/cli/drift">buoy drift</a> — Detailed drift analysis</li>
     <li><a href="/docs/cli/fix">buoy fix</a> — Apply fixes for drift issues</li>

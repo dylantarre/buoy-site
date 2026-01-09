@@ -9,33 +9,18 @@ const terminalLines = [
   { text: '', delay: 1200 },
   { text: 'Found <span class="text-warning">31</span> issues across <span class="text-light">89</span> files', type: 'output', delay: 1400 },
   { text: '', delay: 1600 },
-  { text: '<span class="text-critical font-semibold">CRITICAL (3)</span> — <span class="text-slate">Auto-fixable: 2</span>', type: 'output', delay: 1800 },
+  { text: '<span class="text-critical font-semibold">CRITICAL (3)</span>', type: 'output', delay: 1800 },
   { text: '├─ Button.tsx:12 Missing aria-label', type: 'critical', delay: 2000 },
-  { text: '│  <span class="text-success">→ Fix: Add aria-label={buttonText}</span>', type: 'output', delay: 2200 },
+  { text: '│  <span class="text-success">→ Fix: Add aria-label=&#123;buttonText&#125;</span>', type: 'output', delay: 2200 },
   { text: '└─ Modal.tsx:45 Focus trap conflict', type: 'critical', delay: 2400 },
   { text: '   <span class="text-success">→ Fix: Use FocusTrap from design system</span>', type: 'output', delay: 2600 },
   { text: '', delay: 2800 },
-  { text: '<span class="text-warning font-semibold">WARNING (12)</span> — <span class="text-slate">Auto-fixable: 10</span>', type: 'output', delay: 3000 },
+  { text: '<span class="text-warning font-semibold">WARNING (12)</span>', type: 'output', delay: 3000 },
   { text: '├─ Card.tsx:8 Hardcoded #ffffff → var(--color-bg)', type: 'warning', delay: 3200 },
   { text: '├─ Header.tsx:3 NavHeader deprecated → Navigation', type: 'warning', delay: 3400 },
   { text: '└─ <span class="text-slate-dark">... and 10 more</span>', type: 'muted', delay: 3600 },
   { text: '', delay: 3800 },
-  { text: '<span class="text-buoy font-semibold">Run buoy fix --apply to apply 12 auto-fixes</span>', type: 'output', delay: 4000 },
-]
-
-const fixTerminalLines = [
-  { text: '', delay: 600 },
-  { text: '<span class="text-buoy">⚓</span> Applying auto-fixes...', type: 'output', delay: 800 },
-  { text: '', delay: 1200 },
-  { text: '<span class="text-success">✓</span> Fixed Card.tsx: #ffffff → var(--color-bg)', type: 'success', delay: 1400 },
-  { text: '<span class="text-success">✓</span> Fixed Button.tsx: Added aria-label', type: 'success', delay: 1600 },
-  { text: '<span class="text-success">✓</span> Fixed Badge.tsx: 8px → var(--spacing-sm)', type: 'success', delay: 1800 },
-  { text: '<span class="text-success">✓</span> Fixed Header.tsx: NavHeader → Navigation', type: 'success', delay: 2000 },
-  { text: '<span class="text-slate-dark">... and 8 more</span>', type: 'muted', delay: 2200 },
-  { text: '', delay: 2400 },
-  { text: '<span class="text-success font-semibold">12 issues fixed.</span> <span class="text-slate">3 need manual review.</span>', type: 'output', delay: 2600 },
-  { text: '', delay: 2800 },
-  { text: 'Coverage improved: <span class="text-warning">52%</span> → <span class="text-success">68%</span>', type: 'output', delay: 3000 },
+  { text: '<span class="text-buoy font-semibold">Add to CI to catch at the PR →</span>', type: 'output', delay: 4000 },
 ]
 
 const driftTypes = [
@@ -118,8 +103,8 @@ const relatedFeatures = [
   title="Design Drift Detection for React, Vue & Svelte | Buoy"
   description="Automatically detect when AI-generated code drifts from your design system. Find hardcoded values, naming inconsistencies, and deprecated patterns."
   keywords="design drift detection, AI code consistency, design system enforcement"
-  heroTitle="Find drift. Fix it. Measure the improvement."
-  heroDescription="Not just another linter. Buoy finds design drift, auto-fixes what it can, and shows you the measurable improvement in your design system adoption."
+  heroTitle="Find drift. Catch it at the PR. Measure improvement."
+  heroDescription="Not just another linter. Buoy finds design drift, blocks it in CI, and shows you the measurable improvement in your design system adoption."
 >
   <!-- AI-Free Badge -->
   <div slot="hero-extra" class="flex justify-center mt-8">
@@ -231,18 +216,46 @@ const relatedFeatures = [
     </div>
   </section>
 
-  <!-- Terminal Demo: Fix -->
+  <!-- CI Enforcement Section -->
   <section class="py-16 bg-navy">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-bold text-light mb-4 text-center">Step 2: Auto-Fix</h2>
+      <h2 class="text-2xl font-bold text-light mb-4 text-center">Step 2: Catch at the PR</h2>
       <p class="text-slate text-center mb-8 max-w-2xl mx-auto">
-        One command applies all safe fixes. No manual editing required.
+        Add Buoy to CI. Design drift never reaches main.
       </p>
 
-      <Terminal
-        command="buoy fix --apply"
-        lines={fixTerminalLines}
-      />
+      <!-- GitHub PR Check Style Card -->
+      <div class="bg-[#0d1117] border border-[#30363d] rounded-lg overflow-hidden shadow-xl">
+        <div class="px-4 py-3 border-b border-[#30363d] flex items-center gap-2">
+          <svg class="w-4 h-4 text-[#f85149]" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/>
+          </svg>
+          <span class="text-[#f85149] font-medium text-sm">Buoy Design Check — 3 critical issues found</span>
+        </div>
+        <div class="divide-y divide-[#30363d]">
+          <div class="px-4 py-3">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[#58a6ff] text-sm font-mono">src/components/Button.tsx</span>
+              <span class="text-[#8b949e] text-sm">line 12</span>
+            </div>
+            <p class="text-[#c9d1d9] text-sm">Missing aria-label <code class="px-1.5 py-0.5 bg-[#161b22] rounded text-[#f85149] text-xs">Critical</code> → Add <code class="px-1.5 py-0.5 bg-[#161b22] rounded text-[#7ee787] text-xs">aria-label=&#123;buttonText&#125;</code></p>
+          </div>
+          <div class="px-4 py-3">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[#58a6ff] text-sm font-mono">src/components/Card.tsx</span>
+              <span class="text-[#8b949e] text-sm">line 8</span>
+            </div>
+            <p class="text-[#c9d1d9] text-sm">Hardcoded color <code class="px-1.5 py-0.5 bg-[#161b22] rounded text-[#f85149] text-xs">#ffffff</code> → Use <code class="px-1.5 py-0.5 bg-[#161b22] rounded text-[#7ee787] text-xs">var(--color-bg)</code></p>
+          </div>
+          <div class="px-4 py-3">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[#58a6ff] text-sm font-mono">src/components/Header.tsx</span>
+              <span class="text-[#8b949e] text-sm">line 3</span>
+            </div>
+            <p class="text-[#c9d1d9] text-sm">Deprecated component <code class="px-1.5 py-0.5 bg-[#161b22] rounded text-[#f85149] text-xs">NavHeader</code> → Use <code class="px-1.5 py-0.5 bg-[#161b22] rounded text-[#7ee787] text-xs">Navigation</code></p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -256,28 +269,28 @@ const relatedFeatures = [
 
       <div class="grid md:grid-cols-3 gap-6">
         <div class="bg-navy/50 border border-success/30 rounded-xl p-6">
-          <div class="text-2xl mb-4">🔧</div>
-          <h3 class="font-semibold text-light mb-2">Auto-Fixes Applied</h3>
+          <div class="text-2xl mb-4">🛡️</div>
+          <h3 class="font-semibold text-light mb-2">PR Checks</h3>
           <p class="text-sm text-slate mb-4">
-            Hardcoded colors → tokens. Deprecated components → current ones. Done automatically.
+            Catch drift at the PR. Every issue shows the exact token to use instead.
           </p>
-          <code class="text-xs text-success bg-success/10 px-2 py-1 rounded">buoy fix --apply</code>
+          <code class="text-xs text-success bg-success/10 px-2 py-1 rounded">buoy check --ci</code>
         </div>
 
         <div class="bg-navy/50 border border-warning/30 rounded-xl p-6">
           <div class="text-2xl mb-4">📋</div>
-          <h3 class="font-semibold text-light mb-2">Manual Review Queue</h3>
+          <h3 class="font-semibold text-light mb-2">Clear Explanations</h3>
           <p class="text-sm text-slate mb-4">
-            Complex issues get a clear explanation and exactly what needs to change.
+            Every issue includes the file, line, and exactly what needs to change.
           </p>
-          <code class="text-xs text-warning bg-warning/10 px-2 py-1 rounded">buoy fix --dry-run</code>
+          <code class="text-xs text-warning bg-warning/10 px-2 py-1 rounded">buoy check --format detailed</code>
         </div>
 
         <div class="bg-navy/50 border border-buoy/30 rounded-xl p-6">
           <div class="text-2xl mb-4">📈</div>
           <h3 class="font-semibold text-light mb-2">Coverage Score</h3>
           <p class="text-sm text-slate mb-4">
-            Before: 52%. After: 68%. Show leadership exactly how much you improved.
+            Track design system adoption over time. Show leadership real numbers.
           </p>
           <code class="text-xs text-buoy bg-buoy/10 px-2 py-1 rounded">buoy audit</code>
         </div>
@@ -302,7 +315,7 @@ const relatedFeatures = [
             </li>
             <li class="flex items-start gap-2">
               <span class="text-success">✓</span>
-              <span>Auto-fix handles the tedious work</span>
+              <span>CI catches issues before they merge</span>
             </li>
             <li class="flex items-start gap-2">
               <span class="text-success">✓</span>
