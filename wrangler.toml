@@ -1,3 +1,11 @@
 name = "buoy-site"
 compatibility_date = "2025-01-05"
 pages_build_output_dir = "dist"
+
+# Environment variables (set via Cloudflare dashboard or wrangler secret)
+# MAILGUN_API_KEY = "your-mailgun-api-key"
+# MAILGUN_DOMAIN = "mg.buoy.design"
+# SUPPORT_EMAIL = "support@buoy.design"
+
+[vars]
+SUPPORT_EMAIL = "support@buoy.design"

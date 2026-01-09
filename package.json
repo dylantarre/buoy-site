@@ -16,5 +16,8 @@
     "mailgun.js": "^12.6.0",
     "posthog-js": "^1.311.0",
     "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   }
 }
