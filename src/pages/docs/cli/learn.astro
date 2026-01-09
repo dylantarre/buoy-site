@@ -106,24 +106,24 @@ buoy learn</code></pre>
   <p>Use <code>--json</code> for programmatic access:</p>
 
   <pre><code>$ buoy learn --json
-{
+&#123;
   "project": "my-app",
   "scansAnalyzed": 10,
   "totalDrifts": 47,
   "patterns": [
-    {
+    &#123;
       "type": "hardcoded-value",
       "component": "Button",
       "count": 5,
       "files": ["src/Button.tsx", "src/IconButton.tsx"],
       "severity": "warning",
-      "example": {
+      "example": &#123;
         "message": "Hardcoded color #3b82f6",
-        "details": { "expected": "var(--color-primary)" }
-      }
-    }
+        "details": &#123; "expected": "var(--color-primary)" &#125;
+      &#125;
+    &#125;
   ]
-}</code></pre>
+&#125;</code></pre>
 
   <h2>Related Commands</h2>
 
